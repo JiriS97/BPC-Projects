@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-2">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="M R">
+	<META NAME="CREATED" CONTENT="20140211;9232825">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGED" CONTENT="20170215;9393553">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		PRE.western { font-family: "Courier New", monospace; font-size: 10pt }
+		PRE.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		PRE.ctl { font-family: "Courier New", monospace; font-size: 10pt }
+		TD P { color: #000000 }
+		CODE.western { font-family: "Courier New", monospace }
+		CODE.cjk { font-family: "NSimSun", monospace }
+		CODE.ctl { font-family: "Courier New", monospace }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="cs-CZ" LINK="#000080" VLINK="#800000" DIR="LTR">
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-before: always">
+	<COL WIDTH=85*>
+	<COL WIDTH=85*>
+	<COL WIDTH=85*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P ALIGN=JUSTIFY STYLE="widows: 8"><FONT SIZE=3><B><A HREF="../../../index.html.cz">Home
+			page</A></B></FONT></P>
+		</TD>
+		<TD WIDTH=33%>
+			<P ALIGN=CENTER STYLE="widows: 4"><A HREF="../main_pc2.html.cs">PC2A
+			home page</A></P>
+		</TD>
+		<TD WIDTH=33%>
+			<P ALIGN=RIGHT STYLE="widows: 2"><A HREF="../../index.html.cs">Výuka
+			home page</A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P><BR><BR>
+</P>
+<P ALIGN=CENTER><FONT SIZE=6 STYLE="font-size: 22pt"><B>Faktoriál</B></FONT></P>
+<P ALIGN=CENTER><FONT SIZE=2 STYLE="font-size: 11pt"><B>(2017)</B></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4 STYLE="font-size: 16pt"><B>Princip volání funkce,
+podprogramu</B></FONT></P>
+<P>Funkce slouží k dělení programu na logické části, čímž zlepšuje
+čitelnost programu. Umožňuje použití stejného kódu v různých místech
+(za pomoci volání, odskoku do podprogramu). Realizace funkce (tj.
+instrukce, které ji reprezentují), je v paměti pouze jednou. 
+</P>
+<P>Funkce se mohou volat navzájem &ndash; rozlišujeme potom funkci
+volající a funkci volanou. Volající funkce &bdquo;zavolá&ldquo;
+funkci volanou pomocí instrukce skoku do podprogramu &bdquo;call&ldquo;
+(na rozdíl od instrukce &bdquo;prostého&ldquo; skoku umístí &bdquo;call&ldquo;
+na zásobník adresu následující instrukce, protože po ukončení volané
+funkce se musí pokračovat z místa programu, ze kterého se
+&bdquo;odskočilo&ldquo;). Volaná funkce potom provede svou činnost a
+je ukončena returnem &bdquo;return&ldquo; zajistí skok na adresu v
+programu, kterou na zásobník uložil &bdquo;call&ldquo;.</P>
+<P>Volající a volaná funkce (v jazyce C/C++) sdílí data přes
+parametry/argumenty a návratovou hodnotu. Parametry jsou uvedeny svým
+typem a názvem v hlavičce funkce a jsou to lokální proměnné funkce
+(jejich život končí s instrukcí návratu z funkce). Návratová hodnota
+je uvedena pouze svým typem a nemá jméno - &bdquo;zůstane&ldquo; po
+vykonání funkce jako její výsledek a dá se využít ve výrazech jako
+proměnná daného typu (typ dán návratovou hodnotou). Poté co je
+použita v daném výrazu (ve kterém je volána funkce) návratová hodnota
+&bdquo;mizí&ldquo; a již není k dispozici.</P>
+<P>Paměťové místo pro parametry funkce i pro návratovou hodnotu je
+vyhrazeno na zásobníku. Volající i volaná funkce si však musí
+rozumnět v typu a počtu parametrů. Proto je nutné aby před voláním
+funkce znal překladač její prototyp (jméno a typy argumentů a
+návratové hodnoty. Na základě této informace překladač nejen vyhradí
+správné místo na zásobníku, ale pokud je to nutné, tak provede i
+konverzi parametru z typu proměnné použité ve volání na typ očekávaný
+(je-li ve volání funkce, která očekává typ int proměnná typu double,
+je vyhrazeno místo na int a proměnná typu double je převedena na typ
+int a uložena do připraveného místa). Pro informování překladače o
+prototypech funkce slouží uvedení prototypů do hlavičkového souboru,
+který tímto oznamuje překladači jak má realizovat volání (konverze na
+typ očekávaný volanou funkcí).</P>
+<P>S voláním funkce je spojená režie, spočívající ve &bdquo;spotřebě&ldquo;
+paměti a času. Paměť je nutná k vytvoření a uložení předávaných
+proměnných, někdy je ještě před voláním funkce nutné &bdquo;uklidit&ldquo;
+registry procesoru (uložit je na zásobník), protože volaná funkce je
+může použít pro své výpočty a tím přemazat v nich uložená data. Po
+ukončení funkce jsou tato data vrácena zpět do příslušných registrů.
+Dále je nutné uložit návratovou adresu. Tato manipulace s pamětí a
+časová režie pro &bdquo;skoky&ldquo; na jiné adresy trvá nějaký čas &ndash;
+časová režie volání funkce.</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rekurzivní funkce</B></FONT></P>
+<P>Jsou funkce, které volají samy sebe (nejčastěji přímo, ale může k
+tomu dojít i nepřímo (zprostředkovaně)). Používá se při řešení
+složitějších úloh (například neuronové sítě, expertní systémy), při
+hledání řešení, kdy se upraví parametry a zavolá se tatáž funkce. 
+</P>
+<P>Například výpočet faktoriálu lze vyjádřit funkcí, kdy se ve
+výpočtu opět vystupuje faktoriál: X! = X (X-1)!, kde výraz (X-1)! se
+počítá opět podle tohoto vzorce. Tento vzorec se použije pro X &gt;
+0, s čímž souvisí ukončovací podmínka (aby se z toho nestal nekonečný
+algoritmus končící pádem počítače na nedostatek paměti zásobníku).
+Faktoriál je tak vlastně definován pomocí faktoriálu.</P>
+<P>Výhodou rekurze také je, že volání funkce nemusí být provedeno na
+konci algoritmu ale i na jeho začátku či uprostřed. Část algoritmu se
+tedy provádí při přímé a část až při zpětné cestě rekurzí. Jako
+příklad může sloužit tisk hodnot faktoriálu od nuly do daného čísla &ndash;
+u rekurzivního algoritmu faktoriálu se to dá vyřešit tiskem hodnoty
+po návratu z volání funkce s menším parametrem. <BR>Dalším příkladem
+je způsob určení poloviny intervalu neznáme-li předem jeho délku
+(použito v programovacím jazyce Karel). Potom se dá použít rekurzivní
+algoritmus. Jeho základem je pravidlo, že doprostřed intervalu se
+dostaneme tak, že na každé dva kroky vpřed uděláme krok vzad.
+Rekurentní pravidlo společně s podmínkou ukončení lze napsat: Udělej
+dva kroky a pokud nejsi u zdi, použij tento návod, potom udělej krok
+zpět. (Průběh algoritmu je na následujícím obrázku, každý obdélník
+značí jednotlivé volání téže funkce. Pozn. po volání funkce se
+vracíme na následující část programu).</P>
+<P><IMG SRC="01_faktorial_html_5ca2673b.gif" NAME="obrázky1" ALIGN=BOTTOM WIDTH=663 HEIGHT=309 BORDER=0></P>
+<P>Nevýhodou rekurzivního volání funkcí je velká paměťová náročnost &ndash;
+při každém volání se vytváří nové lokální parametry, volané a
+návratové hodnoty. Jelikož se jedná o nestandardně velké požadavky na
+zásobník, může dojít k jeho přetečení a chybám programu. Překladače
+proto mají volbu na nastavení velikosti zásobníku.</P>
+<P>Většina rekurzivních funkcí se dá přepsat pomocí cyklů &ndash;
+jejich použití je tedy otázkou zhodnocení jejich výhodnosti oproti
+tomuto řešení. Rekurzi si ukážeme na výpočtu faktoriálu (i když je
+často zmiňován jako nevhodný příklad použití, jedná se o jednoduchý a
+známý algoritmus (a z tohoto hlediska je tedy vhodný jako první
+ukázka této programovací techniky)).</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4 STYLE="font-size: 16pt"><B>Úkol:</B></FONT></P>
+<P><SPAN STYLE="background: transparent">V souboru mainfaktorial.c
+vypočtěte faktoriál (třemi &bdquo;způsoby&ldquo;). Dodržujte přesně
+požadovaný formát tisku.</SPAN></P>
+<P><SPAN STYLE="background: transparent">0) Načtěte (funkcí scanf)
+dvě celá čísla oddělená čárkou (použijte typ long long (formátovací
+řetězec je &ldquo;%lld&ldquo;) a int). První celé číslo je hodnota
+jejíž faktoriál se bude počítat. Druhé číslo bude nula nebo jedna
+(udává, zda se provede bod číslo 4 zadání). Pro výpočty využívejte
+typ unsigned long long int. Pokud se nenačtou dva parametry, nebo
+druhé číslo nebude jedna či nula, vypište text &bdquo;chybne zadani&ldquo;
+a program ukončete s chybovým kódem 1. Pokud bude první číslo
+záporné, vypište text &bdquo;chybne zadani&ldquo; a program ukončete
+s chybovým kódem 2.<BR>1) Napište kód realizující výpočet faktoriálu
+(nerekurzivní) přímo ve funkci main. Vytiskněte ve funkci main
+faktoriál zadaného čísla (z bodu 0). Vytiskněte pouze výsledek
+(číslo) na začátek řádku a odřádkujte. Výpočet a tisk výsledku
+proveďte pouze je-li parametr pro výpočet správně zadán.<BR>2)
+Napište funkci (se jménem faktnerek) počítající faktoriál
+(nerekurzivní). Funkce vrací faktoriál čísla zadaného jako parametr.
+Vypočtěte pro zadané číslo faktoriál. Vytiskněte výsledek jako v
+předchozím bodě. <BR>3) Napište funkci (se jménem faktrek),
+počítající faktoriál, výpočet realizovaný rekurzivně. Funkce vrací
+faktoriál čísla zadaného jako parametr.</SPAN></P>
+<P><SPAN STYLE="background: transparent">4) Využijte funkci z bodu 3
+(vytvořte kopii se jménem faktrektisk) tak, aby při jediném jejím
+volání vytiskla tato funkce tabulku faktoriálů pro čísla od 0 (nuly)
+do zvoleného čísla. Tuto funkci zavolejte pouze, mělo-li druhé zadané
+číslo hodnotu 1. Formát tisku je: od začátku řádku je pole desíti
+znaků do kterých je vytištěna hodnota čísla ze kterého se aktuálně
+počítá faktoriál (zarovnáno na pravý kraj tohoto pole), potom
+následuje pole třiceti znaků, do kterého se vytiskne faktoriál
+aktuální hodnoty (zarovnáno na pravý kraj tohoto pole). Každá dvojice
+(hodnota + výsledek) má vlastní řádek.</SPAN></P>
+<P><SPAN STYLE="background: transparent">Pokud funkce main skončí bez
+chyby, vrací hodnotu 0.</SPAN></P>
+<P><BR><BR>
+</P>
+<P><A HREF="test_cv1_fact.zip">Testovací soubory.</A></P>
+<P><BR><BR>
+</P>
+<P>Jaký je vhodný datový typ pro realizaci proměnných pro výpočet
+faktoriálu? Jaké jsou rozdíly (výhody/nevýhody použití různých
+datových typů).</P>
+<P>Jaké je maximální číslo (pro zvolený datový typ) jehož faktoriál
+se dá vypočítat? Navrhněte jak toto číslo zjistit.</P>
+<P>Představte si, jaký je rozdíl v použití paměťi (volání funkce,
+uložení proměnných &hellip;) při realizace funkce podle bodu 2 a 3.</P>
+<P><BR><BR>
+</P>
+<P><B>Poznámky:</B></P>
+<P>Faktoriál je označován &bdquo;!&ldquo; (faktoriál pěti je:
+5!=5*4*3*2*1*1= 120 ,10! = 3628800,
+1000!&nbsp;=&nbsp;4,02387260077093773543702433923e+2567). Definice
+funkce faktoriál je:<BR>i ! je pro kladná i roven součinu (i * (i-1)
+* (i-2) * &hellip; 4 * 3 * 2 * 1). <BR>Pro i=0 je i! = 1.</P>
+<P>Zároveň je možné faktoriál definovat i jako rekurentní vztah (v
+definici se objeví tatáž funkce)<BR>i ! je pro kladná i roven (i *
+(i-1)! ) <BR>pro i = 0 je i! = 1.</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>Rozšíření úkolu</B></FONT> (na cvičeních pro
+rychlejší studenty)</P>
+<P>Na základě příkladu (example) na adrese
+<A HREF="http://msdn.microsoft.com/en-us/vstudio/4e2ess30(v=vs.105).aspx">http://msdn.microsoft.com/en-us/vstudio/4e2ess30(v=vs.105).aspx</A>
+(msdn time.h clock) zkuste zjistit kolik času jednotlivé funkce
+zaberou pro výpočet čísla MAX. (V případě, že je časový interval
+malý, je vhodné zavolat funkci několikrát a vypočítat průměrný čas).</P>
+<P STYLE="margin-bottom: 0cm"><CODE CLASS="western">Upravený příklad
+z uvedené adresy
+<BR><A HREF="http://msdn.microsoft.com/en-us/vstudio/4e2ess30(v=vs.105).aspx">http://msdn.microsoft.com/en-us/vstudio/4e2ess30(v=vs.105).aspx</A></CODE></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<DIV ID="BodyBackground" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<DIV ID="JelloSizer" DIR="LTR">
+		<P><BR><BR>
+		</P>
+		<DIV ID="JelloExpander" DIR="LTR">
+			<P><BR><BR>
+			</P>
+			<DIV ID="JelloWrapper" DIR="LTR">
+				<P><BR><BR>
+				</P>
+				<DIV ID="mainSection" DIR="LTR">
+					<P><BR><BR>
+					</P>
+					<DIV ID="mainBody" DIR="LTR">
+						<PRE CLASS="western"><A NAME="c_afe54cd2a16a445c846f27354bb6cb7d"></A><CODE CLASS="western">// crt_clock.c</CODE>
+<CODE CLASS="western">// This example displays the elapsed time for given program period.</CODE>
+<CODE CLASS="western">//</CODE>
+
+<CODE CLASS="western">#include &lt;stdio.h&gt;</CODE>
+<CODE CLASS="western">#include &lt;stdlib.h&gt;</CODE>
+<CODE CLASS="western">#include &lt;time.h&gt;</CODE>
+
+<CODE CLASS="western">int main( void )</CODE>
+<CODE CLASS="western">{</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">long    i = 6000000L;</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">clock_t start, finish;</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">double  duration;</CODE>
+
+<CODE CLASS="western">   </CODE><CODE CLASS="western">// Measure the duration of an event.</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">printf( &quot;Time to do %ld empty loops is &quot;, i );</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">start = clock();</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">while( i-- ) </CODE>
+<CODE CLASS="western">      </CODE><CODE CLASS="western">;</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">finish = clock();</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">duration = (double)(finish - start) / CLOCKS_PER_SEC;</CODE>
+<CODE CLASS="western">   </CODE><CODE CLASS="western">printf( &quot;%2.1f seconds\n&quot;, duration );</CODE>
+<CODE CLASS="western">}</CODE></PRE>
+					</DIV>
+				</DIV>
+			</DIV>
+		</DIV>
+	</DIV>
+</DIV>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>Poslední změna 2017-02-14</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

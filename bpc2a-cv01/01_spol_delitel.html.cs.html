@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0081)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/01_spol_delitel.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.1.3  (Win32)">
+	<meta name="AUTHOR" content="M R">
+	<meta name="CREATED" content="20140211;9232825">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGED" content="20170209;15441440">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGEDBY" content="M R">
+	<meta name="CHANGEDBY" content="M R">
+	<meta name="CHANGEDBY" content="M R">
+	<meta name="CHANGEDBY" content="M R">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		TD P { color: #000000 }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p><span style="background: transparent"></span></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<colgroup><col width="85*">
+	<col width="85*">
+	<col width="85*">
+	</colgroup><tbody><tr valign="TOP">
+		<td width="33%">
+			<p align="JUSTIFY" style="widows: 8"><a href="http://www.uamt.feec.vutbr.cz/~richter/index.html.cz"><font size="3"><b><span style="background: transparent">Home
+			page</span></b></font></a></p>
+		</td>
+		<td width="33%">
+			<p align="CENTER" style="widows: 4"><a href="http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/main_pc2.html.cs"><span style="background: transparent">PC2A
+			home page</span></a></p>
+		</td>
+		<td width="33%">
+			<p align="RIGHT" style="widows: 2"><a href="http://www.uamt.feec.vutbr.cz/~richter/vyuka/index.html.cs"><span style="background: transparent">Výuka
+			home page</span></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<p style="margin-bottom: 0cm"><br>
+</p>
+<p style="margin-bottom: 0cm"><br>
+</p>
+<p style="margin-bottom: 0cm"><br>
+</p>
+<p><font size="4" style="font-size: 15pt"><b><span style="background: transparent">Společný
+dělitel <font size="2">(2017)</font></span></b></font></p>
+<p><br><br>
+</p>
+<p><span style="background: transparent">Vytvořte program mainsd.exe,
+který najde společné dělitele dvou zadaných celých čísel.</span></p>
+<p><br><br>
+</p>
+<p><font size="1" style="font-size: 8pt">Obecné připomínky pro řešení
+úkolů:<br>0) Přečíst a promyslet zadání. Vývojový diagram.<br>1)
+založit projekt<br>2) vytvořit *.c soubor pro main. Vytvořit *.c a
+*.h soubor pro každý celek (funkci) pro který je to rozumné<br>3)
+Ošetřit hlavičkový soubor proti vícenásobnému načtení.<br>4) int main
+a return<br>5) Programovat po &#8222;malých&#8220; částech. Číst a
+odstranit warningy (errory jsou samozřejmostí). Kontrolovat správnost
+činnosti</font></p>
+<p><br><br>
+</p>
+<p><span style="background: transparent">0) Načtěte z klávesnice
+pomocí funkce scanf dvě celá čísla oddělená čárkou.<br>V případě
+chybného vstupu (nenačtení dvou parametrů &#8211; viz. návratová
+hodnota funkce scanf) vytiskne program text &#8222;chybne zadani&#8220;
+a vrátí hodnotu 2. Toto hlášení tiskněte na standardní chybový
+výstup.<br>Výstupní text je možné tisknout na standardní výstup
+(parametr stdout &#8211; nastaveno na konzolu) nebo na chybový výstup
+(parametr stderr &#8211; nastaveno na konzolu). Na standardní výstup
+tiskne funkce printf, která používá stdout implicitně, takže ho není
+nutné uvádět. Pro tisk na chybový výstup se používá tisk pomocí
+fprintf(stderr, &#8220; &#8220;, proměnné). Obdobně je možné tisknout
+na standardní výstup fprintf(stdout, &#8220; &#8220;, proměnné).
+<br>Význam tohoto dělení je v tom, že prostředí mimo program dokáže
+tyto výstupy oddělit a zpracovávat odděleně. Je tedy možné
+zpracovávat zvláště chybová hlášení a data.</span></p>
+<p><span style="background: transparent">1) Napište funkci, která
+najde největšího společného dělitele ze dvou celých čísel (vhodné pro
+krácení zlomků) (8;4) -&gt; 4, (8;6) -&gt; 2. <br>Pro první realizaci
+použijte funkci uplatňující &#8222;hrubou sílu&#8220; (procházející
+postupně hodnoty a hledající společného dělitele (např. pomocí modulo
+&#8211; zbytek po celočíselném dělení)). Funkce fsdM &#8211; má dva
+parametry a společný dělitel vrací jako návratovou hodnotu.</span></p>
+<p><span style="background: transparent">Pro druhou verzi využijte
+Eukleidův algoritmus/Euclidean algorithm (použijte jako hesla do
+wikipedia). Funkce fsdE &#8211; má dva parametry a společný dělitel
+vrací jako návratovou hodnotu.</span></p>
+<p><span style="background: transparent">Oba výsledky vytiskněte od
+začátku řádku. Jednu hodnotu na řádek.</span></p>
+<p><span style="background: transparent">2) Napište funkci, která
+vytiskne všechny společné dělitele dvou celých čísel (od největšího,
+jedničku tisknout bude) (8;4) -&gt; 4; 2; 1 , (48;24) -&gt; 24; 12;
+8; 6; 4; 3; 2; 1. Funkce fsd &#8211; má dva parametry. Nalezené
+hodnoty vytiskne na konzolu (z funkce je nevrací). Funkce vrací počet
+společných dělitelů (včetně jedničky, vrácená nula značí chybu).
+Formát tisku budou celá čísla oddělená středníkem a mezerou (viz
+příklad výše), bez odřádkování. Po tisku odřádkuje.<br>Počet
+společných dělitelů vytiskne volající funkce na samostatný
+řádek.<br>Pozn.: u funkcí (u kterých se předpokládá, že se budou
+obecně používat) není vhodné používat operace vstupu a výstupu, pokud
+nejsou na vstup či výstup přímo určeny. Přítomnost operací vstupu či
+výstupu znemožní použití funkce v režimu &#8222;bez obsluhy&#8220; a
+proto je vhodné operace vstupu a výstupu umístit mimo vlastní činnost
+funkce. (V našem případě by bylo vhodnější vrátit společné dělitele v
+poli, které by se ovšem díky proměnnému počtu prvků muselo dynamicky
+vytvářet). </span>
+</p>
+<p><span style="background: transparent">3) V případě chybného
+parametru (z jakéhokoli důvodu nelze vypočítat společný dělitel),
+vrátí funkce hodnotu nula (hodnota nula většinou (standardně) znamená
+&#8222;v pořádku&#8220;. Zde ovšem spojujeme vrácení hodnoty chyby a
+hodnoty do jednoho parametru, a proto musíme volit hodnotu, která
+nemůže být výsledkem) a program vytiskne text &#8222;chybne zadani&#8220;
+a odřádkuje. Program postupně zavolá všechny funkce. Program vrací
+kód 1 v případě, že některá z funkcí vrátila chybový kód (tj nulu).</span></p>
+<p><br><br>
+</p>
+<p><span style="background: transparent">Hlavní program dejte do
+souboru mainsd.c, funkce naprogramujte do souboru sd.c (+ k němu
+sd.h). Pro testování použijte minimálně volání z příkladů uvedených v
+bodu 1 a 2.</span></p>
+<p><span style="background: transparent"><b>Každý soubor</b> začne
+komentářem, ve kterém bude jméno autora, datum a odkaz na zadání:<br>/*
+Autor: Autor Autor<br>datum: 1.1.2015<br>www.... */</span></p>
+<p><span style="background: transparent">Hlavičkové soubory budou
+ošetřeny proti vícenásobnému načtení.<br></span><br><br>
+</p>
+<p><span style="background: transparent">Zkuste nejprve nakreslit
+vývojový diagram, zvolit vhodné datové typy a posléze teprve
+naprogramovat.</span></p>
+<p><br><br>
+</p>
+<p><span style="background: transparent"><a href="http://www.uamt.feec.vutbr.cz/~petyovsky/projects/testsuite/testsuite.zip">Soubory</a>
+pro testování správnosti naprogramování &#8211; rozbalte v adresáři
+</span><i><span style="background: transparent">Debug</span></i><span style="background: transparent">,
+ve kterém se nachází přeložený exe soubor. Spusťte pomocí konzolového
+příkazu </span><i><span style="background: transparent">testsuite_nsd.cmd</span></i><span style="background: transparent">.
+Následně si všímejte (chybových) výpisů.</span></p>
+<p><a href="http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/01_testovani_cmd.html.cs">Popis testování pomocí dávkového
+souboru</a>.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><span style="background: transparent">Poslední změna 2017-02-08</span></p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</body></html>

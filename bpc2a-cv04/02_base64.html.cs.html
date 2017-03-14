@@ -1,0 +1,961 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-2">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGED" CONTENT="20170302;10403272">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm; font-family: "Times New Roman", serif; font-size: 12pt }
+		TD P { background: transparent; page-break-before: auto; page-break-after: auto }
+		STRONG { font-weight: bold }
+		A:link { color: #0000ff; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800080; so-language: zxx; text-decoration: underline }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="cs-CZ" LINK="#0000ff" VLINK="#800080" DIR="LTR">
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><B>Kódování a dekódování
+Base64</B></FONT></P>
+<P><STRONG>(2017)</STRONG></P>
+<P><BR><BR>
+</P>
+<P><STRONG>Teorie k realizaci Base64 dekodéru:</STRONG><BR>Base64 je
+formát pro uložení binárního souboru tak, aby výsledný textový soubor
+obsahoval pouze základní tisknutelné znaky. (Je využito např. u
+příloh v emailu, kde je při odesílání podporován pouze textový způsob
+komunikace tj. 7bit ASCII).</P>
+<P>Vaším úkolem je implementovat dekodér formátu Base64 a pomocí něj
+rozkódovat připravenou zprávu. Při řešení úkolu si procvičíte práci s
+řetězci, operace <A HREF="../prednasky/02_bitoper.pdf">bitového
+posuvu a bitového maskování</A>.</P>
+<P>&nbsp;</P>
+<P><STRONG>Popis formátu Base64:</STRONG><BR>Formát kóduje vždy 3
+osmibitové znaky/bajty na 4 znaky z množiny 64 znaků, proto Base64.
+Množina 64 znaků obsahuje tyto znaky:</P>
+<P><FONT FACE="Courier New">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/</FONT></P>
+<P>Předchozí řádek (převodní pole pro znaky) slouží k převodu
+přijatého znaku na index = pozice znaku v tomto řádku. Nebo pro
+převod indexu na výstupní znak.</P>
+<P>Princip kódování popisuje nákres níže, kde jsou vždy 3 osmibitové
+znaky původní zprávy rozděleny na 4 skupiny po 6 bitech. Jednotlivé
+skupiny po 6 bitech (tj. 64 kombinací) potom představuji vždy index
+do základní Base64 množiny, ze které je následně vybrán znak na
+pozici indexu.</P>
+<P>Vstupní zpráva (tři 8bitové hodnoty):</P>
+<P><BR><BR>
+</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DD>
+							<TABLE WIDTH=539 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+								<COL WIDTH=172>
+								<COL WIDTH=180>
+								<COL WIDTH=163>
+								<TR VALIGN=TOP>
+									<TD WIDTH=172>
+										<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB>X<SUB>1</SUB>X<SUB>0</SUB></SPAN></B></FONT></FONT></P>
+									</TD>
+									<TD WIDTH=180>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>7</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>6</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>5</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>4</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>3</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>2</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>1</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>0</B></FONT></SUB></FONT></P>
+									</TD>
+									<TD WIDTH=163>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#3333ff"><FONT FACE="Courier New"><B>Z<SUB>7</SUB>Z<SUB>6</SUB>Z<SUB>5</SUB>Z<SUB>4</SUB>Z<SUB>3</SUB>Z<SUB>2</SUB>Z<SUB>1</SUB>Z<SUB>0</SUB></B></FONT></FONT></P>
+									</TD>
+								</TR>
+							</TABLE>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>Výsledná zakódovaná zpráva (čtyři 6bitové hodnoty, následně
+převedené na čtyři znaky Base64):</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DD>
+							<TABLE WIDTH=554 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+								<COL WIDTH=131>
+								<COL WIDTH=130>
+								<COL WIDTH=129>
+								<COL WIDTH=132>
+								<TR VALIGN=TOP>
+									<TD WIDTH=131>
+										<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B>X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB></B></FONT></FONT></P>
+									</TD>
+									<TD WIDTH=130>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X</SPAN></B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">1</SPAN></B></FONT></SUB></FONT><FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X</SPAN></B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">0</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">7</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">6</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">5</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">4</SPAN></B></FONT></SUB></FONT></P>
+									</TD>
+									<TD WIDTH=129>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>3</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>2</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>1</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>0</B></FONT></SUB></FONT><FONT COLOR="#3333ff"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Z</SPAN></B></FONT></FONT><FONT COLOR="#3333ff"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">7</SPAN></B></FONT></SUB></FONT><FONT COLOR="#3333ff"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Z</SPAN></B></FONT></FONT><FONT COLOR="#3333ff"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">6</SPAN></B></FONT></SUB></FONT></P>
+									</TD>
+									<TD WIDTH=132>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#3333ff"><FONT FACE="Courier New"><B>Z<SUB>5</SUB>Z<SUB>4</SUB>Z<SUB>3</SUB>Z<SUB>2</SUB>Z<SUB>1</SUB>Z<SUB>0</SUB></B></FONT></FONT></P>
+									</TD>
+								</TR>
+							</TABLE>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>&nbsp;</P>
+<P><STRONG><SPAN STYLE="font-weight: normal">Zakončovací
+(zarovnávací) sekvence:</SPAN></STRONG><BR>Vstupní (kódovaný) soubor
+je vždy čten po 3 znacích (bajtech) a na výstup jsou vždy odeslány 4
+znaky. Proto je třeba pro soubory délky nedělitelné bezezbytku třemi,
+doplnit na vstupní straně chybějící znaky (doplňuje se vždy znak s
+hodnotou \<FONT FACE="Courier New">0</FONT>) a na výstupní straně
+odlišit doplněné znaky od původních (znak =). Tímto je zajištěno, že
+správně zakódovaná zpráva má počet znaků vždy dělitelný čtyřmi a
+zároveň je možné určit přesnou velikost původního souboru.</P>
+<P>Příklady koncového zarovnání na výstupní délku čtyř znaků v
+případě chybějících bajtů na vstupu:</P>
+<P>Vstup (pouze jedna 8bitová hodnota / bajt):</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DL>
+								<DL>
+									<DL>
+										<DL>
+											<DL>
+												<DD>
+												<TABLE WIDTH=182 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+													<COL WIDTH=174>
+													<TR>
+														<TD WIDTH=174 VALIGN=TOP>
+															<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+															<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB>X<SUB>1</SUB>X<SUB>0</SUB></SPAN></B></FONT></FONT></P>
+														</TD>
+													</TR>
+												</TABLE>
+											</DL>
+										</DL>
+									</DL>
+								</DL>
+							</DL>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>Výstup (dvě 6bitové hodnoty převedené na Base64 znaky a dva
+doplňující znaky =):</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DD>
+							<TABLE WIDTH=499 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+								<COL WIDTH=136>
+								<COL WIDTH=117>
+								<COL WIDTH=103>
+								<COL WIDTH=111>
+								<TR VALIGN=TOP>
+									<TD WIDTH=136>
+										<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B>X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB></B></FONT></FONT></P>
+									</TD>
+									<TD WIDTH=117>
+										<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X</SPAN></B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">1</SPAN></B></FONT></SUB></FONT><FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X</SPAN></B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">0</SPAN></B></FONT></SUB></FONT><FONT FACE="Courier New"><B>0</B></FONT><FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT><FONT FACE="Courier New"><B>0</B></FONT><FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT><FONT FACE="Courier New"><B>0</B></FONT><FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT><FONT FACE="Courier New"><B>0</B></FONT><FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT>
+										</P>
+									</TD>
+									<TD WIDTH=103>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										=<FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT>
+										</P>
+									</TD>
+									<TD WIDTH=111>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										=<FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT>
+										</P>
+									</TD>
+								</TR>
+							</TABLE>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>&nbsp;</P>
+<P>Vstup (pouze dvě 8bitové hodnoty / bajty):</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DL>
+								<DL>
+									<DD>
+									<TABLE WIDTH=345 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+										<COL WIDTH=165>
+										<COL WIDTH=164>
+										<TR VALIGN=TOP>
+											<TD WIDTH=165>
+												<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+												<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B>X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB>X<SUB>1</SUB>X<SUB>0</SUB></B></FONT></FONT></P>
+											</TD>
+											<TD WIDTH=164>
+												<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+												<FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y<SUB>7</SUB>Y<SUB>6</SUB>Y<SUB>5</SUB>Y<SUB>4</SUB>Y<SUB>3</SUB>Y<SUB>2</SUB>Y<SUB>1</SUB>Y<SUB>0</SUB></B></FONT></FONT></P>
+											</TD>
+										</TR>
+									</TABLE>
+								</DL>
+							</DL>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>Výstup (tři 6bitové hodnoty převedené na Base64 znaky a jeden
+doplňující znak =):</P>
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DL>
+						<DL>
+							<DD>
+							<TABLE WIDTH=504 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+								<COL WIDTH=127>
+								<COL WIDTH=129>
+								<COL WIDTH=113>
+								<COL WIDTH=103>
+								<TR VALIGN=TOP>
+									<TD WIDTH=127>
+										<P STYLE="background: transparent; border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">X<SUB>7</SUB>X<SUB>6</SUB>X<SUB>5</SUB>X<SUB>4</SUB>X<SUB>3</SUB>X<SUB>2</SUB></SPAN></B></FONT></FONT></P>
+									</TD>
+									<TD WIDTH=129>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#ff3333"><FONT FACE="Courier New"><B>X</B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B>1</B></FONT></SUB></FONT><FONT COLOR="#ff3333"><FONT FACE="Courier New"><B>X</B></FONT></FONT><FONT COLOR="#ff3333"><SUB><FONT FACE="Courier New"><B>0</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>7</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>6</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>5</B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B>Y</B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B>4</B></FONT></SUB></FONT></P>
+									</TD>
+									<TD WIDTH=113>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										<FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">3</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">2</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">1</SPAN></B></FONT></SUB></FONT><FONT COLOR="#66cc00"><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">Y</SPAN></B></FONT></FONT><FONT COLOR="#66cc00"><SUB><FONT FACE="Courier New"><B><SPAN STYLE="background: transparent">0</SPAN></B></FONT></SUB></FONT><FONT FACE="Courier New">0</FONT><FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT><FONT FACE="Courier New">0</FONT></P>
+									</TD>
+									<TD WIDTH=103>
+										<P STYLE="border: 1.00pt solid #000000; padding: 0.05cm 0.19cm">
+										=<FONT COLOR="#000000"><SUB><SPAN STYLE="background: transparent">
+										</SPAN></SUB></FONT>
+										</P>
+									</TD>
+								</TR>
+							</TABLE>
+						</DL>
+					</DL>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P>&nbsp;</P>
+<P><STRONG>Zadání base64 dekodér:</STRONG><BR>Sestavte program v
+jazyce C, který správně rozkóduje zadaný textový soubor.</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Navrhněte strukturu funkcí programu, včetně kontrol.</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Navrhněte a implementujte funkci pro převod znaku Base64 na jeho
+index v množině povolených znaků (při výskytu nepovoleného znaku
+generujte chybové hlášení).</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Navrhněte a implementujte funkci pro dekódování (čtveřice 6bitových
+znaků na 3 osmibitové).</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Využijte tuto funkci při postupné konverzi vstupního souboru.</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Ošetřete chybové stavy (špatná délka vstupu, chybný znak ...).</P>
+<P STYLE="margin-left: 1.27cm; text-indent: -0.64cm">6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Ověřte, že daný program umožňuje dekódovat i zakódované binární
+soubory.</P>
+<P>&nbsp;</P>
+<P><I><B>Postup práce (doporučení):</B></I><BR>Nesnažte se
+naprogramovat vše najednou. Postupujte po částech. 
+</P>
+<OL>
+	<LI><P>Na papír si vyřešte převod pro první čtveřici znaků
+	testovacího textu<BR><BR><BR>
+	</P>
+	<TABLE WIDTH=1009 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+		<COL WIDTH=157>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=27>
+		<COL WIDTH=26>
+		<TR VALIGN=TOP>
+			<TD WIDTH=157>
+				<P LANG="en-US" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Vstupn<SPAN LANG="cs-CZ">í
+				znaky</SPAN></FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=205 BGCOLOR="#ffff99">
+				<P LANG="en-US" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>'...'</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=202 BGCOLOR="#ffd320">
+				<P LANG="en-US" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>'...'</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=202 BGCOLOR="#ccffcc">
+				<P LANG="en-US" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>'...'</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=201 BGCOLOR="#99ffff">
+				<P LANG="en-US" ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>'...'</FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=157>
+				<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Pozice
+				znaku v převodním poli (dekadicky/hexa)</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=205 BGCOLOR="#ffff99">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>I1:</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=202 BGCOLOR="#ffd320">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>I2:</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=202 BGCOLOR="#ccffcc">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>I3:</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=6 WIDTH=201 BGCOLOR="#99ffff">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>I4:</FONT></FONT></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=157>
+				<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Pozice
+				binárně</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffff99">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ffd320">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ccffcc">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=26 BGCOLOR="#99ffff">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=157>
+				<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Převod
+				šestic na osmice </FONT></FONT>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#cfe7f5">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27 BGCOLOR="#ff9999">
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=27>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD WIDTH=26>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=157>
+				<P ALIGN=CENTER STYLE="margin-bottom: 0.5cm"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Osmice
+				hexa/dekadicky</FONT></FONT></P>
+				<P ALIGN=CENTER><BR>
+				</P>
+			</TD>
+			<TD COLSPAN=8 WIDTH=275 BGCOLOR="#cfe7f5">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>O1:</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=8 WIDTH=272 BGCOLOR="#ff9999">
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>O2:</FONT></FONT></P>
+			</TD>
+			<TD COLSPAN=8 WIDTH=271>
+				<P ALIGN=LEFT><FONT FACE="Times New Roman, serif"><FONT SIZE=3>O3:</FONT></FONT></P>
+			</TD>
+		</TR>
+	</TABLE>
+	<LI><P>Napište funkci na převod z binárních šestic (pole čtyř znaků
+	&ndash; v počítači uložené v osmi bitech) do osmic (pole tří
+	osmibitových znaků)<BR>Realizace polí v paměti (nuly ze vstupního
+	řádku se při přesunu do výsledku &bdquo;vypouští&ldquo;).</P>
+	<TABLE WIDTH=822 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+		<COL WIDTH=141>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=13>
+		<COL WIDTH=12>
+		<TR VALIGN=TOP>
+			<TD WIDTH=141>
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Vstup I (4x8
+				bitů)<BR>pozice bitů/hodnota</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>8<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>7<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffff99" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>8<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>7<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ffcc00" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>8<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>7<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ccffcc" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>8<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff00cc">
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>7<BR>0</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#66ffff" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#66ffff" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#66ffff" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#66ffff" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#66ffff" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=12 BGCOLOR="#66ffff" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD COLSPAN=3 WIDTH=183>
+				<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Výstup O
+				(3x8bitů)<BR>pozice bitů</FONT></FONT></P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="8" SDNUM="1029;">
+				<P>8</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="7" SDNUM="1029;">
+				<P>7</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD COLSPAN=3 WIDTH=55 BGCOLOR="#cfe7f5" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#cfe7f5" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="8" SDNUM="1029;">
+				<P>8</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="7" SDNUM="1029;">
+				<P>7</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD COLSPAN=3 WIDTH=55 BGCOLOR="#ff8080" SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=13 BGCOLOR="#ff8080" SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="8" SDNUM="1029;">
+				<P>8</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="7" SDNUM="1029;">
+				<P>7</P>
+			</TD>
+			<TD COLSPAN=3 WIDTH=55 SDVAL="6" SDNUM="1029;">
+				<P>6</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="5" SDNUM="1029;">
+				<P>5</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="4" SDNUM="1029;">
+				<P>4</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="3" SDNUM="1029;">
+				<P>3</P>
+			</TD>
+			<TD WIDTH=13 SDVAL="2" SDNUM="1029;">
+				<P>2</P>
+			</TD>
+			<TD WIDTH=12 SDVAL="1" SDNUM="1029;">
+				<P>1</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P>Pro binární operace používejte bezznaménkové typy. Pro práci se
+	znaky použijte nejmenší celočíselný datový typ (unsigned char).<BR>Ve
+	funkci používejte operátory bitového posunu (doprava a doleva) o
+	daný počet znaků &ndash; pro unsigned typy se při posunu doplňují
+	nuly. Dále používejte operátory bitového součtu a součinu (OR a
+	AND).<BR>Napište si na papír jak se vytvoří výstupní data (O1, O2,
+	O3) v závislosti na vstupních datech (I1,I2,I3,I4) pomocí binárních
+	operátorů jazyka C a pro ověřte zda funguje pro první čtveřici
+	znaků. (Například první výstup O1 (šedá) má na třetím bitu zprava
+	první bit I1 (žlutá) &ndash; I1 je tedy nutné posunout tak aby se
+	její první bit objevil na třetí pozici. Dále jsou v O1 na prvních
+	dvou bitech bity 6 a 5 I2 (oranžová), je tedy nutné I2 posunout tak,
+	aby se bity 6 a 5 objevili na pozici 2 a 1).<BR>Možná hlavička
+	funkce: <I>int Prevod( datový_typ Input[4], datový_typ Output[3])</I><BR>Ve
+	funkci <I>main</I> si vytvořte pole o čtyřech znacích, do kterého
+	vložíte (pro účely testování) hodnoty z druhého řádku tabulky z bodu
+	1. Dále vytvořte pole pro uložení výsledku. Zavolejte funkci <I>Prevod</I>
+	s těmito poli a překontrolujte zda převod proběhl správně.<BR>V
+	jazyce C se volající a volaná funkce &bdquo;dělí&ldquo; o předané
+	pole &ndash; změny provedené v poli ve volané funkci se proto objeví
+	i ve funkci volající.<BR>Funkce <I>main</I> s ukázkami volání bude v
+	souboru <I>base64main.c</I>, funkce budou v souboru <I>fbase64.c</I>
+	a příslušné hlavičky v <I>fbase64.h</I>.</P>
+	<LI><P>Napište funkci, která zjistí (a vrátí) pozici předaného znaku
+	v převodním poli. Možná hlavička funkce: datový_typ
+	<I>Pozice</I>(datový_typ PrevadenyZnak).<BR>Řešení je možné
+	dvojí:<BR>První řešení: vytvoří se pole znaků, které se naplní
+	převodním polem. Pomocí cyklu se postupně srovnává <I>PrevadenyZnak</I>
+	se znakem v poli. Při souhlasu znaků jsme zjistili pozici znaku v
+	poli a to je návratová hodnota. Toto řešení je programově jednoduché
+	ale při provádění je časově náročné.<BR>Druhé řešení vychází z toho,
+	že v převodním poli jsou bloky za sebou jdoucích znaků a tedy převod
+	pro velká písmena může vypadat takto:<BR>if (PrevadenyZnak je velké
+	písmeno) return (PrevadenyZnak &ndash; <SPAN LANG="en-US">'</SPAN><SPAN LANG="cs-CZ">A</SPAN><SPAN LANG="en-US">'</SPAN><SPAN LANG="cs-CZ">);<BR>Obdobně
+	provedeme převod i pro malá písmena a číslice s tím, že malá písmena
+	začínají na pozici off = 'Z'-'A'+1 (na této pozici je malé
+	a).<BR>Problém by mohl tvořit vyplňovací/ukončovací znak '='. Pokud
+	by jeho ASCII hodnota ležela v intervalu pozic písmen tabulky (do
+	hodnoty 64), musí být převeden na hodnotu větší než 64 (například
+	254).<BR>Ve funkci main zavolejte tuto funkci postupně pro první
+	čtyři znaky a výsledky uložte tak, aby byly připraveny jako vstupní
+	parametr pro funkci z bodu 2). Ověřte zda funguje.<BR>Při tvorbě je
+	možné se inspirovat <A HREF="../prednasky/05_ctype.pdf">zde</A>.</SPAN></P>
+	<LI><P>Po odladění první čtveřice následuje (pokus o) převod celého
+	textu. Vytvořte si pole, do kterého vložíte testovací řetězec znaků
+	(při kopírování řetězce z těchto stránek odstraňte formátovací znaky
+	(které se projeví jako (skryté) mezery v textu, a převeďte celý text
+	na jeden řádek). Napište cyklus, ve kterém budete ze vstupního
+	řetězce brát čtveřice znaků (, které po převodu pomocí funkce z bodu
+	3) překopírujete do pole, které je použité jako pole vstupních
+	parametrů funkce z bodu 2)). Postupně převeďte všechny čtveřice
+	vstupního textu. Výsledek převodu vytiskněte na konzolu. 
+	</P>
+	<LI><P>Funkci <I>Prevod</I> z bodu 2) upravte/doplňte tak, aby
+	převáděla i poslední čtveřici. To znamená, že pokud je posledním
+	znakem rovná se, převedou se pouze dva znaky a pokud jsou na konce
+	dvě rovná se, převede se pouze jeden znak. Návratová hodnota funkce
+	potom může značit kolik znaků bylo převedeno.</P>
+</OL>
+<P><BR><BR>
+</P>
+<P>Upravte program tak, aby zpracoval soubor jehož název je dán na
+příkazovém řádku. Další parametr na příkazovém řádku bude název
+výstupního souboru (například prevod.exe s64.txt svysl.txt)</P>
+<P>Soubor pro testy je <A HREF="s64.txt.cs">zde</A>.</P>
+<P><BR><BR>
+</P>
+<P><STRONG>Budete-li mít čas, naprogramujte i kodér Base64.</STRONG></P>
+<P><BR><BR>
+</P>
+<P><STRONG>Testovací zpráva:</STRONG><BR>Využijte soubor získaný na
+adrese:</P>
+<P><A HREF="http://www.uamt.feec.vutbr.cz/~petyovsky/vyuka/bppc/base64/base64_message.php.cs">http://www.uamt.feec.vutbr.cz/~petyovsky/vyuka/bppc/base64/base64_message.php</A></P>
+<P>Případně testovací text:</P>
+<P STYLE="margin-bottom: 0.42cm"><FONT FACE="Courier New">KiogVG90byBqZSB6YWtvZG92YW5hIHpwcmF2YSAqKgpQb2t1ZCBqc2kgamkgc3ByYXZuZSByb3prb2Rv<BR>dmFsLCByZWtuaSBuYWhsYXM6CiJIZWxlIHZlbmt1IHByc2k/IgoqKiogS29uZWMgenByYXZ5ICoqCg==</FONT></P>
+<P STYLE="margin-bottom: 0.42cm"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.42cm"><B>Ukázka řešení první čtveřice:</B></P>
+<P STYLE="margin-bottom: 0.42cm">První čtveřice: Kiog se převede na
+trojici ???<BR>Kiog (jedná se vlastně o čtyři znaky <SPAN LANG="cs-CZ">'K'
+'i' 'o' 'g' v paměti jsou uloženy pomocí ASCII reprezentace
+obsahující hodnoty: 4B, 69, 6F, 67.<BR>Nyní musíme najít pozici
+každého znaku  v tabulce &bdquo;AB....89+/&ldquo; &rarr; 0A, 22,28,20
+hexa (tj. 10,34,40,32 dekadicky)<BR>Tyto hodnoty mají bitovou
+reprezentaci v 6-ti bitové (BASE64) logice : 001010 100010 101000
+100000<BR>V paměti jsou ovšem uloženy v 8-mi bitových jednotkách:  
+0000 1010 / 0010 0010 / 0010 1000/ 0010 0000.<BR>Tyto je nutné
+&bdquo;přeskládat&ldquo; do tří osmibitových bytů: 0010 1010 / 0010
+1010 / 0010 0000<BR>Toto jsou již výstupní hodnoty: 2A, 2A,
+20<BR>Výstupní hodnoty mohou reprezentova (ale obecně nemusí &ndash;
+můžeme převádět i soubory pdf, jpg, png &hellip;) text. V tom případě
+jsme dostali ASCII hodnoty znaků. Po zobrazení hodnot získáváme znaky
+</SPAN><SPAN LANG="en-GB">'*' '*' ' ' </SPAN><SPAN LANG="cs-CZ">(tj.
+Hvězdička, hvězdička, mezera).</SPAN></P>
+<P STYLE="margin-bottom: 0.42cm"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.42cm"><BR><BR>
+</P>
+<P><STRONG>Literatura:<BR></STRONG><A HREF="http://cs.wikipedia.org/wiki/Base64">http://cs.wikipedia.org/wiki/Base64</A></P>
+<P><A HREF="http://en.wikipedia.org/wiki/Base64">http://en.wikipedia.org/wiki/Base64</A></P>
+<P>&nbsp;</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>Poslední úpravy 2017-02-23</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

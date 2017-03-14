@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-2">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="M R">
+	<META NAME="CREATED" CONTENT="20140305;14155167">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGED" CONTENT="20170221;11383529">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="Richter">
+	<META NAME="CHANGEDBY" CONTENT="M R">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="cs-CZ" LINK="#000080" VLINK="#800000" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P ALIGN=CENTER><FONT SIZE=6 STYLE="font-size: 22pt"><B>Algoritmus
+hledání průsečíku funkce f(x) s&nbsp;osou x metodou půlení intervalu</B></FONT></P>
+<P><BR><BR>
+</P>
+<P>(2017)</P>
+<P><BR><BR>
+</P>
+<P><B>Zadání:</B></P>
+<P>Metodou půlení intervalu nalezněte průsečík funkce dané polynomem
+s osou x.</P>
+<P>Předpokládáme, že v zadané části je pouze jeden průsečík.
+Rozdělení funkce na úseky s jedním průsečíkem by se řešilo jinde.<BR>Pro
+testy použijte funkci <I>f(x)=10*(x-200)</I><SUP><I>3</I></SUP><I>=10x</I><SUP><I>3
+-</I></SUP> <I>6000x</I><SUP><I>2 </I></SUP><I>+ 1200000x &ndash;
+80000000. </I>&nbsp;Počáteční podmínky krajních bodů pro testy
+nastavte na <I>-1000</I> a <I>+1000</I>.</P>
+<P><BR>Představu o průběhu funkce lze získat například pomocí online
+nástroje <A HREF="http://www.wolframalpha.com/input/?i=10*%28x-200%29%5E3">http://wolframalpha.com</A>
+. <BR><BR><BR>
+</P>
+<P STYLE="line-height: 107%"><FONT SIZE=3><B>Popis algoritmu:</B></FONT><FONT SIZE=3><BR>Je
+dána funkce </FONT><FONT SIZE=3><I>f(x)</I></FONT> <FONT SIZE=3>a
+interval </FONT><FONT SIZE=3><I>&lt;a,b&gt;</I></FONT> <FONT SIZE=3>na
+ose </FONT><FONT SIZE=3><I>x</I></FONT><FONT SIZE=3>, kde </FONT><FONT SIZE=3><I>a
+&lt; b</I></FONT><FONT SIZE=3>. Funkce </FONT><FONT SIZE=3><I>f()</I></FONT>
+<FONT SIZE=3>musí mít na intervalu </FONT><FONT SIZE=3><I>&lt;a,b&gt;</I></FONT>
+<FONT SIZE=3>právě jeden průsečík s&nbsp;osou </FONT><FONT SIZE=3><I>x</I></FONT><FONT SIZE=3>.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>1.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Vypočtěte hodnoty funkce </FONT><FONT SIZE=3><I>f(a)</I></FONT>
+<FONT SIZE=3>a </FONT><FONT SIZE=3><I>f(b)</I></FONT> <FONT SIZE=3>v&nbsp;krajních
+bodech intervalu </FONT><FONT SIZE=3><I>a, b</I></FONT><FONT SIZE=3>.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>2.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Vypočtěte hodnotu funkce </FONT><FONT SIZE=3><I>f(xs)</I></FONT>
+<FONT SIZE=3>v&nbsp;bodě </FONT><FONT SIZE=3><I>xs = (a+b)/2</I></FONT>
+<FONT SIZE=3>(</FONT><FONT SIZE=3><I>xs</I></FONT> <FONT SIZE=3>je
+střed intervalu </FONT><FONT SIZE=3><I>&lt;a,b&gt;</I></FONT><FONT SIZE=3>).</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>3.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Je-li absolutní hodnota </FONT><FONT SIZE=3><I>f(xs)</I></FONT>
+<FONT SIZE=3>menší než zadané číslo </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>Tolerance</FONT></FONT>
+<FONT SIZE=3>nebo algoritmus proběhl </FONT><FONT SIZE=3><I>MAXKROKU</I></FONT>
+<FONT SIZE=3>krát, výpočet ukončete.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>4.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Hodnota </FONT><FONT SIZE=3><I>xs</I></FONT> <FONT SIZE=3>nahradí
+ten z&nbsp;původních krajních bodů, jehož funkční hodnota má stejné
+znaménko. Tím se prohledávaný úsek zmenší na polovinu. Má-li hodnota
+</FONT><FONT SIZE=3><I>f(xs)</I></FONT> <FONT SIZE=3>stejné znaménko
+jako hodnota </FONT><FONT SIZE=3><I>f(a)</I></FONT><FONT SIZE=3>, pak
+</FONT><FONT SIZE=3><I>a=xs</I></FONT><FONT SIZE=3>. V&nbsp;opačném
+případě </FONT><FONT SIZE=3><I>b=xs</I></FONT><FONT SIZE=3>. </FONT>
+</P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>5.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Pokračujte opět bodem 1.</FONT></P>
+<P STYLE="line-height: 107%"><BR><BR>
+</P>
+<P STYLE="line-height: 107%"><FONT SIZE=3><B>Poznámka 1</B>: Vzhledem
+k&nbsp;tomu, že počítač vždy pracuje s&nbsp;čísly s&nbsp;omezenou
+přesností, nemusí se ani při teoreticky nekonečném počtu opakování
+kroků 1 až 4 algoritmu podařit nalézt bod x, kde by f(x) měla přesně
+hodnotu 0. Proto se musíme spokojit s&nbsp;nalezením bodu x, kde
+funkce nabývá dostatečně malé hodnoty (v absolutní hodnotě menší než
+zadané dostatečně malé číslo Tolerance).</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3><B>Poznámka 2</B>: Pokud
+bychom uvažovali, že průběh v okolí průsečíku bude velice strmý
+(například 1/x v okolí nuly), bylo by vhodnější použít jako podmínku
+ukončení výpočtu dosažení intervalu na ose x menšího než Tolerancex.</FONT></P>
+<P STYLE="line-height: 107%">&nbsp;</P>
+<P STYLE="line-height: 107%"><B>Postup řešení:</B></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>0.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Vytvořte projekt a v něm soubory </FONT><FONT SIZE=3><I>mainpul.c,
+funkcepul.c</I></FONT> <FONT SIZE=3>a </FONT><FONT SIZE=3><I>funkcepul.h</I></FONT><FONT SIZE=3>.
+Soubor </FONT><FONT SIZE=3><I>mainpul.c</I></FONT> <FONT SIZE=3>bude
+obsahovat funkci </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>main</FONT></FONT>
+<FONT SIZE=3>a volání funkcí ostatních funkcí. Soubor </FONT><FONT SIZE=3><I>funkcepul.c</I></FONT>
+<FONT SIZE=3>bude obsahovat funkce popsané v&nbsp;bodech 2 a 3. V
+souboru </FONT><FONT SIZE=3><I>funkcepul.h</I></FONT><FONT SIZE=3>.
+budou hlavičky funkcí definovaných v&nbsp;souboru </FONT><FONT SIZE=3><I>funkcepul.c</I></FONT><FONT SIZE=3>.
+Hlavičkový soubor ošetřete proti vícenásobnému načtení.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>1.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Načtěte ze standardního vstupu koeficienty polynomu 3.
+řádu (4 koeficienty). Vstup bude mít tvar např.
+</FONT><I>10;-6000;1200000;-80000000</I><FONT SIZE=3>. Koeficienty
+uložte do pole typu </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>double</FONT></FONT><FONT SIZE=3>.
+Při psaní programu uvažujte možnost snadného rozšíření na polynom
+N-tého řádu. <BR>Dojde-li k&nbsp;chybě při načítání koeficientů,
+ukončete program s&nbsp;návratovou hodnotou 1.<BR>Dále načtěte tři
+čísla. První dvě čísla určující levý resp. pravý okraj intervalu,
+třetí číslo je hodnota </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>Tolerance</FONT></FONT><FONT SIZE=3>.
+Čísla jsou opět oddělena znakem středník. Pro ukládání výše uvedených
+čísel použijte typ </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>double</FONT></FONT><FONT SIZE=3>,
+hodnoty intervalu uložte do pole. <BR>Dojde-li k&nbsp;chybě při
+načítání Tolerance, ukončete program s&nbsp;návratovou hodnotou
+1.<BR>Budou-li špatně zadány hodnoty okrajů (</FONT><FONT SIZE=3><I>a&gt;b</I></FONT><FONT SIZE=3>),
+ukončete program s&nbsp;návratovou hodnotou 2.<BR>Bude-li špatně
+zadán </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>Tolerance</FONT></FONT>
+<FONT SIZE=3>(&lt;=0), ukončete program s&nbsp;návratovou hodnotou
+3.<BR>Pro načítání dat použijte funkci </FONT><FONT FACE="Courier New, sans-serif"><FONT SIZE=3>scanf</FONT></FONT><FONT SIZE=3>,
+kontrolujte návratovou hodnotu (počet skutečně načtených
+parametrů).<BR>Vstupní data nezadávejte ručně z&nbsp;klávesnice, ale
+postupujte dle poznámky 3.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>2.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Napište funkci s prototypem </FONT><FONT SIZE=3><I>double
+HodnotaFunkce(unsigned int aRad, double aKoef[], double aX)</I></FONT><FONT SIZE=3>,
+která vypočte hodnotu polynomu. Např. pro polynom 2. řádu se hodnota
+polynomu počítá dle vztahu: </FONT><FONT SIZE=3><I>f(x)=(k[2]*x+k[1])*x+k[0]</I></FONT><FONT SIZE=3>.
+Ověřte správné fungování výpočtu pro testovací hodnoty
+(vstup,vystup): </FONT>(0,-80000000),(1,-78805990), (-1,-81206010) <FONT SIZE=3>a
+polynom s&nbsp;koeficienty </FONT><I>10;-6000;1200000;-80000000</I><FONT SIZE=3>.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>3.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Napište funkci s&nbsp;prototypem </FONT><FONT SIZE=3><I>double
+Prusecik(unsigned int aRad, double aKoef[],double aOkraje[2], double
+aTolerance)</I></FONT><FONT SIZE=3>. Funkce realizuje výše popsaný
+algoritmus hledání průsečíku funkce s&nbsp;osou x metodou půlení
+intervalu. Návratovou hodnotou je nalezený průsečík s&nbsp;osou x.</FONT></P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>4.</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<FONT SIZE=3>Napište funkci s&nbsp;prototypem </FONT><FONT SIZE=3><I>double
+PrusecikRek(unsigned int aRad, double aKoef[],double aOkraje[2],
+double aTolerance)</I></FONT><FONT SIZE=3>. Funkce realizuje výše
+popsaný algoritmus hledání průsečíku funkce s&nbsp;osou x metodou
+půlení intervalu s&nbsp;využitím rekurzivního způsobu výpočtu.</FONT></P>
+<P STYLE="line-height: 107%">&nbsp;</P>
+<P STYLE="line-height: 107%"><FONT SIZE=3><B>Poznámka 3</B>: Jelikož
+vstup z klávesnice je dosti rozsáhlý, byl by při testování programu
+problém s neustálým zadáváním hodnot. Proto použijte pro načítání
+hodnot mechanizmus přesměrování vstupu místo klávesnice ze souboru.
+Vytvořte si soubor (například vstup.input s daty &bdquo;
+<I>10;-6000;1200000;-80000000 -1000;1000;0.1&ldquo;. (Vstupní řetězce
+z minulých bodů jsou odděleny mezerou)</I><BR>Pro přesměrování vstupu
+na soubor se na příkazové řádce používá symbol pro přesměrování &bdquo;<I>&lt;</I>&ldquo;
+<I>program.exe &lt; input.stdin</I>. Tento mechanizmus funguje i v
+ladícím modu. Soubor <I>input.stdin</I> je ovšem nutné umístnit do
+pracovního adresáře, kterým je adresář se zdrojovými texty
+(standardně by tento soubor byl ve stejném adresáři jako spustitelný
+soubor). Přesměrování provedeme uvedením textu &bdquo;<I>&lt;input.stdin</I>&ldquo;
+do parametru argumenty překladače (u projektu volba <I>properties/
+configuration properties/ debugging/command arguments</I>).</FONT></P>
+<P STYLE="line-height: 107%">&nbsp;</P>
+<P STYLE="line-height: 107%">&nbsp;</P>
+<P STYLE="line-height: 107%"><FONT SIZE=3>V případě zájmu o další
+rozšíření programu a procvičení dalších vlastností můžete zkusit
+naprogramovat ze staršího zadání této úlohy bod číslo 5 a sekci
+&bdquo;Zobrazování hodnot během ladění&ldquo;. Starší zadání je <A HREF="01_puleni_intervaluorig.html.cs">zde</A>.</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>Poslední změna 2017-02-16</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
