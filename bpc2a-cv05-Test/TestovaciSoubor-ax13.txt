@@ -1,7 +1,0 @@
-Pocet slov 1/t
-test, oddeleni
-test
-test	tabulator	jest
-Hodne slov, na	radku. A take mohou, byt, vety
-A to, vse se. musi	zpocitat
-tak je

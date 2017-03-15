@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0076)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/06_soubory.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.0.1  (Win32)">
+	<meta name="CREATED" content="0;0">
+	<meta name="CHANGEDBY" content="M R">
+	<meta name="CHANGED" content="20140318;8331486">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p><br><br>
+</p>
+<p align="CENTER"><font size="6" style="font-size: 22pt"><b>Práce se
+soubory</b></font></p>
+<p><br><br>
+</p>
+<p><font size="4" style="font-size: 16pt"><b>Kopie souborů</b></font></p>
+<p>Napište program, který překopíruje soubor ze zdrojového do
+cílového souboru. Pokud cílový soubor existuje, vypíše hlášení a
+kopii neprovede. Názvy obou souborů budou zadány jako parametr
+programu na příkazové řádce: C:\xxxxx\:&gt;&gt;kopiruj.exe zdroj.txt
+cil.txt.</p>
+<p><br><br>
+</p>
+<p><b>Začněte vývojovým diagramem (např.):</b></p>
+<p><i><b>první úroveň:</b></i></p>
+<p>0. názvy souborů dodány jako parametr<br>1. úvod - inicializace -
+kontrola parametrů, otevření souboru a kontrola zda se povedlo<br>2.
+vlastní činnost - funkce se 2 parametry - otevřené soubory<br>3.
+zavření souborů - test zda se povedlo</p>
+<p><br><br>
+</p>
+<p><i><b>druhá úroveň:</b></i></p>
+<p><i>inicializace:</i></p>
+<p>a: jsou přítomny tři paramery? -pokud ne - vypiš zprávu a
+ukonči<br>b: otevři první soubor - otestuj že se povedlo - pokud ne
+vypiš zprávu a ukonči<br>c: otevři druhý soubor - otestuj že se
+povedlo - pokud ne vypiš zprávu,zavři první soubor a ukonči</p>
+<p><i>vlastní činnost: parametry - vstupní a výstupni stream</i></p>
+<p>a: načti znak ze vstupu<br>b: pokud je znak neplatný (je konec
+souboru) skonči<br>c: udělej činnost - ulož znak do vystupu, vyplň
+statistiku &#8230;<br>d: načti znak ze vstupu<br>e: pokračuj od b)</p>
+<p><br><br>
+</p>
+<p>Pokračovat až do úrovně příkazů programu</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><b>Postup řešení na PC:</b></p>
+<ol>
+	<li><p>Nadefinujte si funkci main a v ní proměnné pro vstupní a
+	výstupní soubor. Pro jména vstupního a výstupního souboru si (pro
+	úvodní fázi) nadefinujte textová pole (řetězce) s názvy souborů.
+	Názvy vstupního a výstupního souboru vytiskněte na konzolu. Načtěte
+	(include) příslušné knihovny nutné pro překlad. Program přeložte a
+	spusťte.</p>
+	</li><li><p>Vytvořte si vstupní soubor zdroj.txt na disku (předpokládáme
+	práci s textovými soubory). Otevřete vstupní soubor pro čtení a
+	proveďte ošetření neúspěšného otevření. Vytiskněte zda se otevření
+	povedlo nebo ne. Pro každý otevřený soubor musí existovat jeho
+	zavření &#8211; zavřete soubor na konci programu. Program přeložte a
+	spusťte.</p>
+	</li><li><p>Pomocí cyklu while, ve kterém budete načítat postupně znaky
+	ze souboru (getch) a testování dosažení konce souboru funkcí feof
+	zjistěte délku souboru &#8211; délku vytiskněte. Program přeložte a
+	spusťte.</p>
+	</li><li><p>Do cyklu while doplňte tisk na konzolu (funkce putchar).
+	Program přeložte a spusťte.</p>
+	</li><li><p>Pro výstup na monitor (konzolu) je předdefinovaný
+	&#8222;soubor&#8220;/stream (s názvem proměnné) stdout. Zapište tuto
+	hodnotu do proměnné pro výstupní soubor a tisk z bodu 4 změňte tak
+	aby se tisklo do výstupního streamu (pomocí použití příslušné
+	proměnné) místo příkazu pro tisk na konzolu. Program přeložte a
+	spusťte.</p>
+	</li><li><p>Nyní připravte výstupní stream podle jména (souboru). Soubor
+	je nutné otevřít pokud neexistuje &#8211; pokud existuje, pak se
+	otevření neprovede. Proveďte otevření a vypište zprávu o výsledku na
+	monitor. V případě, že se nepovedlo soubor otevřít, program ukončete
+	&#8211; nezapomeňte, že je již otevřen vstupní soubor, který je
+	nutné uzavřít (před každým ukončením programu &#8211; před každým
+	returnem v main). Stejně tak je nutné zavřít na konci programu
+	výstupní soubor v případě, že se ho podařilo otevřít. Program
+	přeložte a spusťte. V případě správnosti by měla být po ukončení
+	programu ve výstupním souboru kopie souboru vstupního.</p>
+	</li><li><p>V nastavení parametrů prostředí překladače najděte zadání
+	argumentů (tj. textu, který bude vložen na příkazovou řádku za název
+	volaného souboru a dostane se do programu jako parametr funkce main.
+	Parametry lze nastavit sekci debuger &#8211; argumenty.<br>Při
+	volání kopiruj.exe zdroj.txt cil.txt se do argumentů uvede zdroj.txt
+	cil.txt.<br>Prototyp funkce main bude int main(int Pocet_parametru,
+	char *text[]). <br>Pro nás tedy budou tři parametry &#8211; název
+	spouštěného souboru, dosažitelný pomocí text[0], název vstupního
+	souboru dosažitelný přes text[1] a název výstupního souboru
+	dosažitelný přes text[2].<br>Nastavte parametry v prostředí, upravte
+	hlavičku funkce main a na začátku programu vytiskněte počet a názvy
+	zadaných proměnných. Program přeložte a spusťte.</p>
+	</li><li><p>Zkuste najít v adresářové struktuře překládaný exe soubor a
+	spustit ho s příkazové řádky společně s názvy souborů (servant
+	salamandr, nebo spustit konzolu pomocí příkazu cmd).</p>
+	</li><li><p>Vyměňte jména otevíraných souborů z definovaných řetězců z
+	bodu 2) na názvy souborů předané z příkazové řádky. Před pokusem o
+	otevření zahlaste chybu, pokud na řádku nebude správný počet
+	parametrů. Program přeložte a spusťte.</p>
+	</li><li><p>Program pro kopírování rozdělte tak, aby otevření, zavření a
+	kontroly byly v main a pro vlastní kopírování souboru vytvořte
+	funkci (bude mít dva parametry typu FILE*). Program přeložte a
+	spusťte.</p>
+	</li><li><p>Funkci pro kopírování přesuňte do samostatného zdrojového
+	souboru. Vytvořte příslušný hlavičkový soubor &#8211; nezapomeňte na
+	ošetření vícenásobného načtení. Soubor naincludujte do obou
+	zdrojových souborů. Program přeložte a spusťte.</p>
+	</li><li><p>Zkuste co se stane v případě, že do funkce pro kopii pošlete
+	na místě vstupního souboru proměnnou stdin, nebo na místě výstupního
+	stdout (v různých kombinacích i s otevřenými soubory).</p>
+</li></ol>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><font size="4" style="font-size: 16pt"><b>Zjištění statistiky znaků
+v souboru</b></font></p>
+<p>Napište program, který vypíše tabulku ASCII hodnot znaků, jejich
+absolutní počet a jejich procentní zastoupení v souboru. Vyjděte z
+programu pro kopii souborů s tím, že bude dodán ještě další parametr
+na řádku a to počet procent &#8211; tisknout se budou jen znaky,
+které přesáhnou tuto hranici.</p>
+<p><br><br>
+</p>
+<p><b>Postup řešení:</b></p>
+<ol>
+	<li value="1"><p>Vyjděte z programu pro kopírování souborů. Pokud
+	budete v tomto programu pokračovat, nezapomeňte, že jste již dosáhli
+	konce souboru a proto se musíte vrátit na začátek (alternativy
+	(která je nejlepší?): zavření a nové otevření, funkce fseek, funkce
+	rewind).</p>
+	</li><li><p>V main vytvořte proměnné pro statistiku (pole celých čísel o
+	délce rovné počtu znaků &#8211; pro každý výskyt znaku se pozice
+	odpovídající jeho ASCII hodnotě zvýší o jedna). Dále vytvořte
+	proměnnou pro limit procent a naplňte ji nulou nebo hodnotou dodanou
+	z příkazové řádky.</p>
+	</li><li><p>Úpravou funkce pro kopii naplňte pole statistiky. Funkce bude
+	mít navíc parametr pole statistiky. Nebude tisknout do výstupu (a
+	tedy nebude mít jako parametr výstupní soubor), pouze
+	&#8222;projede&#8220;soubor a naplní pole počty znaků. Program
+	přeložte a spusťte.</p>
+	</li><li><p>Napište funkci, které předáte pole statistiky, limit procent
+	a název výstupního streamu. Funkce bude procházet tabulku a pokud
+	znak přesáhne daný limit procent, bude vytištěn do streamu ve
+	formátu &#8211; ASCII kód znaku (hexa), počet znaků, procent.
+	Program přeložte a spusťte.</p>
+</li></ol>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Poslední změna 2014-03-17</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</body></html>
