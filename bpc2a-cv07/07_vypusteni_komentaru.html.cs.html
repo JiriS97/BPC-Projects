@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0088)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/07_vypusteni_komentaru.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.1.3  (Win32)">
+	<meta name="AUTHOR" content="Miloslav Richter">
+	<meta name="CREATED" content="20051002;20345600">
+	<meta name="CHANGEDBY" content="Richter">
+	<meta name="CHANGED" content="20170321;11013006">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm; background: transparent; page-break-inside: avoid; page-break-before: auto; page-break-after: auto }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p align="CENTER"><font size="6"><b>Vypuštění komentářů &#8211; stavový
+automat <font size="3">(2015)</font></b></font></p>
+<p><br><br>
+</p>
+<p><b>Zadání:</b></p>
+<p>Napište program, který vypustí komentáře ze souboru (zdrojový nebo
+hlavičkový jazyka C/C++) a výsledek zapíše do jiného souboru. Úlohu
+vyřešte pomocí principu stavového automatu.</p>
+<p><br><br>
+</p>
+<p><b>Upřesnění zadání:</b></p>
+<ul>
+	<li><p>Program vyřešte pomocí stavového automatu (použijte příkaz
+	switch. K &#8222;pojmenování&#8220; stavů použijte &#8222;textových&#8220;
+	hodnot enum (alternativa k použití #define)</p>
+	</li><li><p>Komentáře předpokládejte v obou tvarech (tj. &#8222;/* */&#8220;
+	i &#8222; // &#8220; ).</p>
+	</li><li><p>Znaky &#8222;komentářů&#8220; se nevyskytují (=nemusíte
+	řešit) v řetězcích a znakových konstantách. Nemusíte řešit trigrafy.
+	Neřešte výskyt v makrech, ani blocích podmíněného překladu.</p>
+	</li><li><p>Název vstupního i výstupního souboru je předán jako parametr
+	(na příkazové řádce) při spuštění programu.</p>
+	</li><li><p>Při otevírání souborů otestujte, zda se otevření zdařilo</p>
+	</li><li><p>Otevřené soubory zavřete</p>
+	</li><li><p>Pro stavy použijte výčtový typ enum.</p>
+	</li><li><p>Vypuštěný komentář /* */ nahraďte mezerou.</p>
+</li></ul>
+<p><br><br>
+</p>
+<p><b>Nápověda řešení:</b></p>
+<p>Princip stavového automatu se používá v situacích, kdy je možné
+úlohu rozdělit na části/stavy, které splňují určité vlastnosti. <br>V
+případě stavového automatu je nutné nalézt části programu tak,
+abychom mohli určit (jednoznačné) přechody mezi jednotlivými stavy.
+<br>Stav je situace, kdy se program chová (na vstupy) stejně. <br>Ke
+změně/přechodu stavu dochází při určité události/událostech <span lang="en-US">na
+vstupu</span>.<br><span lang="en-US">V</span><span lang="cs-CZ">ýhodou
+zápisu pomocí stavového automatu je skutečnost, že jednotlivé stavy
+jsou od sebe ve zdrojovém textu zcela izolovány (oproti vícenásobným
+vnořením, při realizaci pomocí příkazu if) a umožňují tak
+programátorovi lepší kontrolu nad zdrojovým textem a budoucí
+rozšířitelnost stavového automatu.<br>Všimněte si, že realizace
+pomocí stavového automatu nepotřebuje proměnné obsahující předchozí
+hodnoty vstupu (historii vstupu), neboť samotný stav tuto skutečnost
+plně reprezentuje.</span><br>Pro přechody mezi stavy je nutné určit
+události/situace, za kterých k přechodu dochází (například
+hodnota/hodnoty vstupu, časový signál...) a činnost, která se při
+tomto přechodu provede. <br>Ke stejnému přechodu může dojít při více
+typech vstupu (na určitou množinu situací/vstupů reaguje stejně).
+<br>Může docházet i k &#8222;přechodu&#8220; do stejného stavu (pokud
+se nestane něco výjimečného zůstáváme ve stejném stavu).</p>
+<p>Pro náš případ vypouštění komentářů je důležité ponechat úseky
+mimo komentáře (TEXT), zjistit začátek a konec komentáře, komentář
+vypustit.<br>Můžeme tedy určit stavy TEXT, KOMENTAR1, KOMENTAR2 a
+stavy přechodů. <br>Jako impulz pro činnost vezmeme znak ze vstupního
+souboru, na jehož základě rozhodneme o přechodu (&#8222;přepnutí&#8220;)
+do jiného stavu a vykonávané činnosti. <br>Představme si, že načteme
+znak <span lang="en-US">'/'. </span><span lang="cs-CZ">Reakce na
+tento znak bude v každém stavu jiná. V TEXTu to může být &#8222;normální&#8220;
+znak (který se vytiskne), nebo začátek komentáře (který se netiskne)
+&#8211; při příchodu tohoto znaku se tedy přepneme do nového stavu,
+kdy další načtený znak rozhodne, která situace nastala (a zda se
+vrátíme do stavu TEXT, nebo se přepneme do stavu KOMENTARX).
+Přijde-li tento znak v okamžiku, kdy jsme v komentáři, potom ho
+vypustíme. Je zde tedy vidět princip stavů &#8211; stejný podnět se v
+různých stavech řeší různě, (někdy) má vliv na změnu stavu a (někdy)
+na prováděnou akci.</span><br><br><br>
+</p>
+<p>Návrh (několika) stavů pro tento příklad:</p>
+<p>TEXT &#8211; jsme uprostřed textu, který se kopíruje na výstup
+(objeví-li se lomítko, je nutno se přepnout do stavu, kdy lze
+očekávat komentář &#8211; lomítko se na výstup nezapíše)</p>
+<p>LOMITKO &#8211; minulý znak bylo lomítko (podle aktuálního znaku
+poznáme, zda se jedná o /*, // nebo skutečně o lomítko</p>
+<p>KOMENT1 &#8211; jsme uvnitř komentáře /*, další hvězdička je
+potencionální konec 
+</p>
+<p>HVEZDICKA &#8211; následuje-li po hvězdičce (v komentáři
+začínajícím /*) lomítko, končí komentář, je-li to jiný znak, vracíme
+se do KOMENT1</p>
+<p>KOMENT2 &#8211; jsme uvnitř řádkového komentáře &#8211; končí
+koncem řádky (pak je TEXT)</p>
+<p>&#8230;</p>
+<p><br><br>
+</p>
+<p>Pro řešení stavového diagramu se s výhodou používá příkazů
+switch/case realizující větvení na základě celočíselné proměnné
+reprezentující akuální stav programu. Celočíselnou proměnnou (nejlépe
+realizovanou pomocí výčtového typu enum) může být kód stavu, ve
+kterém se nachází vyhodnocování. Podle aktuálně načteného znaku ze
+souboru se stav může změnit a se znakem se provede příslušná akce (u
+našeho příkladu buď kopie na výstup, nebo &#8222;vypuštění&#8220;).
+<br>Příkazy switch lze vkládat do sebe (přehlednost se dá zlepšit
+použítím ohraničujících bloků {} a nebo pomocí funkcí, které sníží
+počet řádků). 
+</p>
+<p>&#8222;První/Vnější&#8220; příkaz switch přepíná větev programu na
+základě stavu. &#8222;Druhý/vnitřní&#8220; switch přepíná na základě
+události/vstupu. V každé větvi bychom měli uvažovat zda dojde ke
+změně stavu a k jaké dojde činnosti. V některých stavech a situacích
+nemusí dojít ani ke změně stavu ani jiné činnosti.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><b>Doporučený postup řešení:</b></p>
+<ul>
+	<li><p>založete nový konzolový projekt (jako základ zdrojových textů
+	můžete vzít soubory z minulého cvičení)</p>
+	</li><li><p>v nastavení projektu (command arguments) napište názvy
+	vstupního a výstupního souboru. Mohlo by dojít ke kolizím při
+	otevírání souborů. Jako projekt použijte prázdný bez <i>precompiled
+	headers. </i><span style="font-style: normal"><b>Pro testování
+	používejte soubory, které nejsou součástí projektu!!!</b></span>
+	<span style="font-style: normal">Testovací soubor si můžete vytvořit
+	i z textu na konci tohoto zadání.</span></p>
+	</li><li><p>Soubor s main se bude jmenovat mainprj.c. Funkce budou v
+	souboru funkce.c a příslušném funkce.h. Soubory se otevřou v main,
+	do funkcí se předá FILE *.</p>
+	</li><li><p>Funkce main by měla mít parametry argc a argv. Vytiskněte je
+	(a zkontrolujte, že mají očekávané hodnoty).</p>
+	</li><li><p>Pokuste se otevřít a zavřít vstupní a výstupní soubor.
+	Otestujte, zda se operace povedly. (Otevření proveďte v textovém
+	modu. K otevření použijte funkci fopen, k zavření fclose. Operace se
+	povedla, pokud fopen nevrátí NULL.).</p>
+	</li><li><p>Zkuste soubor pouze překopírovat. (použijte fgetc a fputc.
+	Obě funkce se chovají tak, že se po provedení posunou v souboru o
+	znak. To je &#8222; znak se pošle do linky a zmizí.&#8220;) Pro test
+	konce souboru použijte funkci feof.</p>
+	</li><li><p><font color="#000000"><span style="background: transparent">Nakreslete
+	si stavový diagram &#8211; stavy a přechody mezi nimi (u přechodů
+	určete kdy k nim dojde a jaká akce je provází)</span></font></p>
+	</li><li><p>Naprogramujte stavový automat. 
+	</p>
+</li></ul>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><b>Pro pokročilé</b></p>
+<p>Doplňte program tak, aby řešil i:</p>
+<p>- situaci, kdy se znak pro komentář objeví v řetězci. Např.:
+printf(&#8220;Komentář se píše takto: /* tady je komentář */ nebo
+takto: // tady je \&#8220;řádkový\&#8220; komentář &#8220;); 
+</p>
+<p>- situaci, kdy by se ve výstupu nemělo objevit více prázdných
+řádků za sebou (např. když vypouštíme 10 jednořádkových komentářů za
+sebou). Po odstranění komentářů mohou v souboru zůstat rozsáhlejší
+úseky prázdných řádků. Na jejich odstranění je možné napsat jiný
+program, s podobným principem. Program by dostal opět názvy vstupního
+a výstupního souboru. Jako další parametr by mohl být uveden počet
+ponechaných prázdných řádků. Druhý program by mohl být použit jako
+zřetězení pomocí roury (neboli pipe). (příklad volání kom_destr.exe
+&lt;zdroje.cpp | radky_destr.exe &gt;zdroje_vyst.cpp)</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Na adrese desatomat.cz je možné shlédnout vytvoření stavového
+automatu na základě zapsané gramatiky. Po kontrole stavového automatu
+je automaticky vygenerován i zdrojový kód C++, který tento automat
+realizuje. (klasický, bezkontextový, příklad pro Petyho).</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Testovací text:</p>
+<p>&nbsp;</p>
+<p style="margin-bottom: 0cm">&nbsp;</p>
+<p style="margin-bottom: 0cm"><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">a</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">b</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">/</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">c</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;<br></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">d</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">a</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">/</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*</span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">pi</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;<br></span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>//
+toto je komentar<br>// toto // je komentar<br>// toto je */
+komentar<br>// toto je /* komentar<br>// toto je ** komentar *<br>/*
+toto je komentar */<br>/* toto je komentar **/<br>/** toto je
+komentar **/<br>/*** toto je komentar ***/<br>/* toto je * komentar
+*/<br>/* toto je /* komentar */<br>/* toto je // komentar */<br>/*
+toto je komentar *//* toto je komentar */<br>/* toto je komentar
+*////* toto je komentar */<br>///* toto je komentar *//* toto je
+komentar */<br>/* toto je /*** komentar */<br>/* toto je /** komentar
+*/<br></i></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">a</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">g</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>//
+toto je komentar<br></i></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">b</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">c</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>//
+toto // je komentar<br></i></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">d</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*</span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">pi</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>//
+toto je */ komentar<br></i></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">a</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>/*
+toto je komentar */</i></span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">b</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;<br></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">h</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>/**
+toto je komentar **/</i></span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*</span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">pi</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;<br></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">c</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">h</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>/*
+toto je komentar */</i></span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">a</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;<br></span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">c</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">=</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">h</span></font></font></font><font color="#000000">
+</font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US"><i>//*
+toto je komentar */ a;<br></i></span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*</span></font></font></font><font color="#000000">
+</font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">e</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">*=</span></font></font></font><font color="#000080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">d</span></font></font></font><font color="#808080"><font face="Courier New, monospace"><font size="3"><span lang="en-US">;</span></font></font></font></p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Pro pokročilé [příklad z normy jazyka C: <font face="Times New Roman, serif"><font size="3">N1570
+Committee Draft &#8212; April 12, 2011 </font></font><font face="Times New Roman, serif"><font size="3"><b>ISO/IEC
+9899:201x</b></font></font>]</p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>"a//b"
+// </b>four-character string literal</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>#include
+"//e" // </b>undefined behavior</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>//
+*/ // </b>comment, not syntax error</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>f
+= g/**//h; // </b>equivalent to<b>f = g / h;</b></i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i>//\</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>i();
+// </b>part of a two-line comment</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i>/\</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>/
+j(); // </b>part of a two-line comment</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i>#define
+glue(x,y) x##y</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>glue(/,/)
+k(); // </b>syntax error, not comment</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>/*//*/
+l(); // </b>equivalent to <b>l();</b></i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i>m
+= n//**/o</i></font></font></font></p>
+<p lang="en-US" style="margin-bottom: 0cm"><font color="#808080"><font face="Courier New, monospace"><font size="3"><i><b>+
+p; // </b>equivalent to<b>m = n + p;</b></i></font></font></font></p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Poslední změna: 2015-09-29</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</body></html>
