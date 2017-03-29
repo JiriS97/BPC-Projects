@@ -70,7 +70,7 @@ typedef enum {
 */
 void removeComments(FILE *in, FILE *out) {
 	stav_t stav = TEXT;
-	while (1) {
+	while (!feof(in)) {
 		char c = fgetc(in);
 		if (c == EOF) return;
 
@@ -121,7 +121,7 @@ void removeComments(FILE *in, FILE *out) {
 
 		case HVEZDICKA: //narazil jsem na * kdyz jsem byl v komentar /*
 			if (c == '/') {
-				fprintf(out, " "); //narhadim komentar mezerou
+				fprintf(out, " "); //nahradim komentar mezerou
 				stav = TEXT;
 			}
 			else if (c != '*') stav = KOMENT_C;

@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0078)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/08_ukazatele.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.1.1  (Win32)">
+	<meta name="CREATED" content="20100307;17021300">
+	<meta name="CHANGED" content="20150326;12565684">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p><br><br>
+</p>
+<p><font size="6" style="font-size: 22pt"><b>Ukazatele - základ</b></font></p>
+<p><br><br>
+</p>
+<p><b>Úkol 1</b></p>
+<p>1) Co znamená následující kód? 
+</p>
+<p><font face="Courier New, monospace">int ii1, *pi1;<br>ii1 = 5;<br>pi1
+= &amp;ii1;</font></p>
+<p>2) Na základě předchozího bodu připište stejný kód pro proměnné
+<i>ii2</i> a <i>pi2</i> tak, aby došlo k inicializaci hodnot ihned v
+definici proměnných (ne přiřazením na dalším řádku).</p>
+<p>3) Pro příklad z minulých dvou bodů nakreslete paměťovou mapu,
+včetně hodnot v proměnných (bez počítače zapište hodnoty pro int a
+šipkou naznačte vazby pro ukazatele.</p>
+<table width="100%" border="1" cellpadding="4" cellspacing="3" style="page-break-inside: avoid">
+	<colgroup><col width="85*">
+	<col width="85*">
+	<col width="85*">
+	</colgroup><tbody><tr valign="TOP">
+		<td width="33%">
+			<p>Adresa (hodnota)</p>
+		</td>
+		<td width="33%">
+			<p>Proměnná (název)</p>
+		</td>
+		<td width="33%">
+			<p>Hodnota proměnné</p>
+		</td>
+	</tr>
+	<tr valign="TOP">
+		<td width="33%" sdnum="1029;0;D.M.YYYY">
+			<p><br>
+			</p>
+		</td>
+		<td width="33%">
+			<p>ii1</p>
+		</td>
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+	</tr>
+	<tr valign="TOP">
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+		<td width="33%">
+			<p>pi1</p>
+		</td>
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+	</tr>
+	<tr valign="TOP">
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+		<td width="33%">
+			<p>ii2</p>
+		</td>
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+	</tr>
+	<tr valign="TOP">
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+		<td width="33%">
+			<p>pi2</p>
+		</td>
+		<td width="33%">
+			<p><br>
+			</p>
+		</td>
+	</tr>
+</tbody></table>
+<p>Správnost nakresleného ověřte pomocí debugeru. (Zatímco hodnoty
+proměnných (int) budou stále stejné, adresy proměnných a tedy
+ukazatelů/adres mohou při každém překladu nabývat jiných hodnot
+(program bude umístněn jinde v paměti)).</p>
+<p>Správnost dále ověřte pomocí tisku hodnot proměnných, ukazatelů a
+adres na kterých proměnné leží (tisk ukazatele je pomocí %p) &#8211;
+pro tisk použijete tedy řetězec (lze použít bez úprav)<br>&#8220;<font face="Courier New, monospace">hodnota
+ii1 = %d adresa ii1 = %p, \n<br>hodnota pi1 = %p adresa pi1 = %p,
+\n<br>hodnota ii2 = %d adresa ii2 = %p, \n<br>hodnota pi2 = %p adresa
+pi2 = %p \n&#8220;</font> .</p>
+<p><br><br>
+</p>
+<p><b>Úkol 2</b></p>
+<p>1) (nový projekt) Vyměňte hodnoty dvou proměnných typu double d1 a
+d2 zprostředkovaně pomocí ukazatelů (na tyto proměnné), ve stejném
+bloku funkce main, bez použití funkcí.<br>Nejprve napište část
+programu, kde vyměníte hodnoty dvou proměnných d1 a d2 (za pomoci
+pomocné proměnné) bez použití ukazatelů.<br>Vytvořte dále dvě
+proměnné typu ukazatel na double (pd1 a pd2), pomocí kterých proměnné
+d1 a d2 (opět) vyměníte (ukazatele nainicializujete na adresy
+proměnných double, vlastní proměnné typu double pro výměnu hodnot
+nepoužijte), výměnu proveďte pomocí ukazatelů na ně (a vhodné pomocné
+proměnné).<br>Nakreslete paměťovou mapu a v ní si zakreslete proces
+výměny proměnných. Realizujte program, který výměnu provede.</p>
+<p>2) Stejnou výměnu proměnných z předchozího bodu proveďte pomocí
+funkce (funkci předejte ukazatele na obě proměnné, pomocí nichž
+funkce proměnné vymění). <br>Lze použít stejný kód jako v předchozím,
+pouze ukazatele na měněné prvky jsou předány jako parametry funkce.
+Nepoužívejte globální proměnné.</p>
+<p>3) V main nadefinujte tři pole intů o 10-ti, 15-ti a 20-ti prvcích
+(pole naplňte hodnotami od nuly s krokem jedna až po poslední prvek).
+Napište (jedinou) funkci, která dostane dva parametry, ukazatele na
+první a poslední prvek pole typu int, a za pomoci těchto ukazatelů
+pole vytiskne. Vytiskněte všechny pole pomocí této funkce</p>
+<p>4) Napište funkci, která vymění prvky (obsah) dvou stejně dlouhých
+polí. Funkce dostane jako parametry ukazatele na počátek polí a
+délku.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Upřesnění zadání <a href="http://www.uamt.feec.vutbr.cz/~petyovsky/vyuka/bpc2a/bpc2a_cv7.pdf">zde</a>.</p>
+<p><br><br>
+</p>
+
+<br><br>
+Tisk vysledku prikladu 2 (jedna z variant).
+<br>format dat na radku: <br>adresa_promenne jmeno_promenne = hodnota_promenne [hodnota_na_adrese_v_promenne]
+<br>
+<p><font face="Courier New, monospace">
+
+0037F794  &nbsp;d1 = 1.000000 &nbsp;&nbsp;&nbsp;zacatek vymena v main  <br>
+0037F784  &nbsp;d2 = 2.000000 <br>
+0037F774  tmp = 0.000000<br>
+0037F794  &nbsp;d1 = 2.000000 &nbsp;&nbsp;&nbsp;konec vymena v main<br>
+0037F784  &nbsp;d2 = 1.000000<br>
+0037F774  tmp = 1.000000<br>
+0037F768  pd1 = 0037F794  &nbsp;&nbsp;[2.000000]  zacatek vymena pres ukazatele v  main<br>
+0037F75C  pd2 = 0037F784  &nbsp;&nbsp;[1.000000]<br>
+0037F774  tmp = 1.000000<br>
+0037F768  pd1 = 0037F794  &nbsp;&nbsp;[1.000000]  konec ukazatele v  main<br>
+0037F75C  pd2 = 0037F784  &nbsp;&nbsp;[2.000000]<br>
+0037F774  tmp = 2.000000<br>
+<br>
+0037F684  ap1 = 0037F794  &nbsp;&nbsp;[1.000000]  zacatek vymena funkce<br>
+0037F688  ap2 = 0037F784  &nbsp;&nbsp;[2.000000]<br>
+0037F670  pom = 0.000000<br>
+0037F684  ap1 = 0037F794 &nbsp;&nbsp;[2.000000]  konec vymena funkce<br>
+0037F688  ap2 = 0037F784 &nbsp;&nbsp;[1.000000]<br>
+0037F670  pom = 1.000000<br>
+0037F794 &nbsp;d1 = 2.000000 &nbsp;&nbsp;&nbsp;hodnoty po funkci<br>
+0037F784  &nbsp;d2 = 1.000000<br>
+Press any key to continue . . .<br>
+</font></p><font face="Courier New, monospace">
+<br><br>
+<p><b>Úkol3</b></p>
+<p>1) (nový projekt) Z přednášek si zkopírujte funkci na vyhledání a
+vrácení minima pomocí ukazatelů. Proveďte rozbor funkce, funkci
+odlaďte i s voláním včetně definice proměnných.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Poslední změna 2014-04-01</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</font></body></html>
