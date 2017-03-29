@@ -1,1 +1,0 @@
-chybne zadani

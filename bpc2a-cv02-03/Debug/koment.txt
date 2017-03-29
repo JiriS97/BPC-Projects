@@ -1,7 +1,0 @@
-01 test na vstup jako text bez èísla
-02 test, e druhé èíslo není nula nebo jednièka
-03 test, e první èíslo je záporné, druhé nula
-04 test, e první èíslo je záporné, druhé jedna
-05 test, faktoriál nuly
-06 test, faktoriál nìjakého èísla, druhé èíslo nula
-07 test, faktoriál nìjakého èísla, druhé èíslo jedna
