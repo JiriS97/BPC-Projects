@@ -70,8 +70,10 @@ typedef enum {
 */
 void removeComments(FILE *in, FILE *out) {
 	stav_t stav = TEXT;
-	char c;
-	while (c=fgetc(in), c!=EOF) {
+	while (1) {
+		char c = fgetc(in);
+		if (feof(in)) break; //feof returns !0 if previous read was after file end!, can NOT use while(!feof(in)){ c=fgetc(in); ...}
+
 		switch (stav) {
 		case TEXT: //jakykoliv text
 			if (c == '/') stav = LOMITKO;
