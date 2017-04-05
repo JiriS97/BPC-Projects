@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0076)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/09_alokace.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.1.1  (Win32)">
+	<meta name="CREATED" content="20140407;17131591">
+	<meta name="CHANGED" content="20150409;11512749">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p align="CENTER"><font size="4" style="font-size: 16pt"><b>Alokace a
+výměna obsahu polí</b></font></p>
+<p><br><br>
+</p>
+<p><b>Zadání</b></p>
+<p>Napište funkci, která vymění obsah (jednotlivé prvky) dvou polí,
+která jsou funkci předána jako parametry. Funkci realizujte tak, aby
+byla co nejrychlejší. Pokud je to možné, realizujte ji tak, aby byla
+(univerzálně) použitelná pro výměnu prvků polí libovolného typu. 
+</p>
+<p><br><br>
+</p>
+<ol start="0">
+	<li><p>stáhněte si (viz. sekce <a href="http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/literatura.html.cs">literatura</a>)
+	zdrojové moduly <a href="http://www.uamt.feec.vutbr.cz/~petyovsky/projects/checker/checker.zip">checker</a>
+	(cpp a h)</p>
+	</li><li><p>Vytvořte projekt, ve kterém bude funkce main a modul
+	check.cpp (do main vložte check.h). Pročtením úvodního komentáře v
+	check.h zjistěte jak je možné check použít.</p>
+	</li><li><p>Ve funkci main si vytvořte proměnné pro uložení dvou polí
+	typu int. Pole vytvořte jako dynamické (alokujte prostor) pro 10
+	prvků pro každé pole. První pole naplňte hodnotami 0 až 9, druhé
+	pole hodnotami 20 až 29. <br>Program přeložte a spusťte &#8211;
+	pokud máte dobře propojené moduly na check, měla by se vám objevit
+	zpráva o využití paměti. Pokud vás checker upozorní na chybu,
+	opravte ji (odalokace).</p>
+	</li><li><p>Vytvořte funkci, která vytiskne místo, kde pole leží a dále
+	obsahy polí &#8211; nejdříve prvního, potom druhého a tuto funkci
+	zavolejte.</p>
+	</li><li><p>Nejprve v main a potom ve funkci vyměňte obsahy polí. Pro
+	&#8222;výměnu&#8220; polí použijte mechanizmus z minulého cvičení.
+	Nebudete vyměňovat prvky v polích, ale pouze ukazatele na tato pole
+	(minule se vyměňovaly hodnoty typu int (či double), nyní bude postup
+	stejný, ale typem bude ukazatel).<br>Tímto postupem dokážeme vyměnit
+	libovolně dlouhé pole pomocí výměny dvou ukazatelů, což je podstatně
+	rychlejší.<br>Nakreslete si paměťovou mapu.<br>Všimněte si, že při
+	výměně prvků polí pomocí ukazatelů není nutné pracovat s vlastními
+	prvky pole. Pracuje se vlastně pouze s &#8222;adresovou částí&#8220;
+	ukazatele, typ není využit.</p>
+	</li><li><p>Nyní v tomtéž projektu zopakujte body 2 a 3 ale místo typu
+	int použijte typ double (kód bude tedy dvakrát &#8211; pro vytvoření
+	a tisk pole int a double). 
+	</p>
+	</li><li><p>Zavolejte funkci pro výměnu polí pro vytvořené pole typu
+	double. Funkce bude volána pro dva různé typy &#8211; int a double.
+	Bude fungovat? Proč? V čem by mohl být problém? <br>Jaký typ by byl
+	nejlepší pro parametry funkce a proč? (Funkce je volána s více
+	(dvěma) typy, bylo by dobré použít nějaký &#8222;univerzální&#8220;
+	typ. Vyberte z char, int, double, float, void).</p>
+</li></ol>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><i>Motivační obrázek pro řešenou úlohu:</i></p>
+<p><img src="./09_alokace.html.cs_files/09_alokace_html_5b0456ad.jpg" name="obrázky1" align="LEFT" width="640" height="480" border="0"><br clear="LEFT"><br><br>
+</p>
+<p align="CENTER">V místě mezi P2 a P_Y (a P1 a P_X) je hranice mezi
+volající a volanou funkcí<br>Vpravo jsou naznačená pole, uprostřed
+jsou proměnné ve kterých jsou adresy polí a naznačené kam ukazují
+před a po výměně.<br>Vlevo jsou proměnné ve funkci, mezi levým a
+středním sloupcem jsou naznačeny &#8222;změny&#8220; proměnných mezi
+funkcí volající a volanou.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Poslední změna 2014-04-08</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</body></html>
