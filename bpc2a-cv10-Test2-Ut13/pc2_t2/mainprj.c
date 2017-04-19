@@ -22,14 +22,12 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdlib.h>
 #include <stdio.h>
 #include "funkce_d.h"
 
 #include "check.h"
 
-// zde bude funkce main
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
 		fprintf(stderr, "Nepodarilo se otevrit vstupni soubor!\n");
@@ -48,9 +46,8 @@ int main(int argc, char *argv[]) {
 		return 5;
 	}
 
-	int *pole = malloc((pocet_cisel+1) * sizeof(int)); //tohle se podle zadani nema osetrovat?, a musim si ulozit i pocet cisel do [0] pro fce
-	pole[0] = pocet_cisel;
-	for (int i = 1; i <= pocet_cisel; i++) {
+	int *pole = malloc(pocet_cisel * sizeof(int)); //tohle se podle zadani nema osetrovat?
+	for (int i = 0; i < pocet_cisel; i++) {
 		if (fscanf(f, "%d", &pole[i]) != 1) { //chyba pri nacitani pole
 			fclose(f);
 			free(pole);
@@ -60,10 +57,10 @@ int main(int argc, char *argv[]) {
 
 	int *pole_limit1 = NULL;
 	int *pole_limit2 = NULL;
-	int delka1 = Vyber(pole, &pole_limit1, 10); //prvni s limitem 10
-	int delka2 = Vyber(pole, &pole_limit2, 20); //druhe s limitem 20
+	int delka1 = Vyber(pole, &pole_limit1, 10, pocet_cisel); //prvni s limitem 10, v pole[0] je delka
+	int delka2 = Vyber(pole, &pole_limit2, 20, pocet_cisel); //druhe s limitem 20, v pole[0] je delka
 
-	if (delka1 < 0 || delka2 < 0) {
+	if ((delka1 < 0) || (delka2 < 0)) {
 		fclose(f);
 		free(pole_limit1);
 		free(pole_limit2);

@@ -22,11 +22,10 @@
 * THE SOFTWARE.
 */
 
-// zde bude osetreni hlavicky, prototypy funkci, ...
 #ifndef FUNKCE_D_H
 #define FUNKCE_D_H
 
 int NadLimit(int *aData, int aLimit, int aDelka);
-int Vyber(int *aVstup, int **aVystup, int aLimit);
+int Vyber(int *aVstup, int **aVystup, int aLimit, int aDelka);
 
 #endif

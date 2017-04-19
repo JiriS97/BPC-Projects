@@ -22,12 +22,10 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdlib.h>
 
 #include "check.h"
 
-// zde bude zdrojovy kod pozadovanych funkci
 int NadLimit(int *aData, int aLimit, int aDelka)
 {
 	if (aData == NULL) return -1;
@@ -39,17 +37,17 @@ int NadLimit(int *aData, int aLimit, int aDelka)
 	return pocet;
 }
 
-int Vyber(int * aVstup, int ** aVystup, int aLimit)
+int Vyber(int * aVstup, int ** aVystup, int aLimit, int aDelka)
 {
 	if (aVstup == NULL || aVystup == NULL) return -1;
 	if (*aVystup != NULL) return -2;
 
-	int pocet = NadLimit(&aVstup[1], aLimit, aVstup[0]);//delka je v pole[0], data od pole[1]... 
+	int pocet = NadLimit(aVstup, aLimit, aDelka);
 	*aVystup = malloc(pocet * sizeof(int));
 	if (*aVystup == NULL) return -3; //alokace se nepovedla
 
 	int pocitadlo = 0;
-	for (int i = 1; i <= aVstup[0]; i++) {
+	for (int i = 0; i < aDelka; i++) {
 		if (aVstup[i] > aLimit) (*aVystup)[pocitadlo++] = aVstup[i];
 	}
 
