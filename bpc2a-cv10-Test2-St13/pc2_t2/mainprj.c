@@ -22,13 +22,11 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdio.h>
 #include "funkce_a.h"
 
 #include "check.h"
 
-// zde bude funkce main
 int main(int argc, char *argv[]) {
 	if (argc != 2) return 2;
 
@@ -39,26 +37,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	char *radek = NULL;
-	int pocet_znaku = 0;
-	fpos_t pos = 0;
 
-	//zjistim si pocet znaku
-	do {
-		(void)fgetc(f);
-		pocet_znaku++;
-	} while (!feof(f));
-	rewind(f); //vratim se na zacatek
-
-	//a pak ho hlidam, feof by reagoval az na nepovedene cteni a zatim by fce hodily chybu
-	while (pos < pocet_znaku) { //pos je typu pos_t, ten je definovany jako 64bit int
-		int ret1 = NactiRadek(&radek, f);
-		unsigned ret2 = PozpatkuTiskRet(&radek);
-		if (ret1 != 0 || ret2 == 0) {
+	while (1) { 
+		int ret = NactiRadek(&radek, f);
+		if (ret!=0) {
+			if ((ret == -99) && feof(f)) break; //pri chybe -99 (chyba cteni) a konci souboru ukoncit bez chyby
 			fclose(f);
 			stat();
 			return 3;
 		}
-		fgetpos(f, &pos);
+		if (PozpatkuTiskRet(&radek) == 0) {
+			fclose(f);
+			stat();
+			return 3;
+		}
 	}
 
 	fclose(f);

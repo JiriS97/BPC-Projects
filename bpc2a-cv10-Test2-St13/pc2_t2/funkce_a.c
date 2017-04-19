@@ -22,14 +22,12 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdlib.h>
 #include <string.h>
 
 #include "check.h"
 #include "funkce_a.h"
 
-// zde bude zdrojovy kod pozadovanych funkci
 
 unsigned PozpatkuTiskRet(char **aRadek) {
 	if (aRadek == NULL || *aRadek == NULL) return 0;
@@ -52,7 +50,9 @@ int NactiRadek(char **aRadek, FILE *aFile) {
 	if (*aRadek != NULL) return -2;
 
 	int pocet;
-	fscanf(aFile, "%d:", &pocet);
+	if (fscanf(aFile, "%d:", &pocet) != 1) {
+		return -99; //chyba cteni souboru
+	}
 	
 	char *buffer = malloc((pocet + 1) * sizeof(char));
 	if (buffer == NULL) return -3;
