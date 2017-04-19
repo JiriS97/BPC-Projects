@@ -22,14 +22,12 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdlib.h>
 #include <stdio.h>
 #include "funkce_c.h"
 
 #include "check.h"
 
-// zde bude funkce main
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
 		fprintf(stderr, "Nepodarilo se otevrit vstupni soubor!\n");

@@ -22,7 +22,6 @@
 * THE SOFTWARE.
 */
 
-// zde bude osetreni hlavicky, prototypy funkci, ...
 #ifndef FUNKCE_C_H
 #define FUNKCE_C_H
 

@@ -22,23 +22,21 @@
 * THE SOFTWARE.
 */
 
-// include potrebnych hlavickovych souboru
 #include <stdlib.h>
 
 #include "check.h"
 #include "funkce_c.h"
 
-// zde bude zdrojovy kod pozadovanych funkci
 
 int Pridej(int **aPole, int aVal, int aDelka)
 {
-	if (aPole == NULL) return -1;
+	if ((aPole == NULL) && (aDelka != 0)) return -1; //kdyz je delka 0, tak to neni chyba
 	int *novePole = malloc((aDelka+1) * sizeof(int));
 	if (novePole == NULL) return -3;
 
 	for (int i = 0; i < aDelka; i++) novePole[i] = (*aPole)[i]; //nakopiruju data
 	novePole[aDelka] = aVal; //pridam nova
-	free(*aPole); //uvolnim stare pole
+	if(aDelka) free(*aPole); //uvolnim stare pole, ale jen kdyz uz melo delku (tj. existovalo)
 	*aPole = novePole; //predam nove
 	return aDelka+1;
 }
@@ -47,17 +45,19 @@ int NactiData(int **aData, FILE * aFile)
 {
 	if (aData == NULL || aFile == NULL) return -1;
 	if (*aData != NULL) return -2;
-	int *pointer = malloc(1 * sizeof(int));
-	if (pointer == NULL) return -3;
+	int *pointer = NULL;
 
 	int num, pocet=0;
+
 	while (fscanf(aFile, "%d", &num) == 1) {//nacitam cisla
 		pocet=Pridej(&pointer, num, pocet); //pridam
-		if (pocet < 0) { //nepovedlo se
+		if (pocet < 0) { //nepovedlo se pridat, tam probiha take alokace
 			*aData = pointer; //chyba
-			return -4;
+			return -3;
 		}
 	}
+	//az budu tady tak neslo nacist cislo
+	if (!feof(aFile)) return -4; //jestli to nebylo koncem radku tak to je chyba nacitani 
 
 	*aData = pointer; //vse ok
 	return pocet;
