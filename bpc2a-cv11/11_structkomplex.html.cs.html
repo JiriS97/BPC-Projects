@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0082)http://www.uamt.feec.vutbr.cz/~richter/vyuka/PC2A/cviceni/11_structkomplex.html.cs -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+	
+	<title></title>
+	<meta name="GENERATOR" content="OpenOffice 4.0.1  (Win32)">
+	<meta name="CREATED" content="20140421;13480532">
+	<meta name="CHANGED" content="20150501;15411122">
+	<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 1cm; margin-top: 1cm; margin-bottom: 1cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+		A:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	-->
+	</style>
+</head>
+<body lang="cs-CZ" link="#000080" vlink="#800000" dir="LTR">
+<p align="CENTER"><font size="5"><b>Struktura &#8211; komplexní čísla</b></font></p>
+<p><br><br>
+</p>
+<p>Komplexní číslo patří ke složitějšímu datovému typu &#8211; skládá
+se ze dvou složek : Imaginární a Reálné (lze použít i dvojici
+amplituda a úhel, přístup k programování je zde stejný). Pro práci s
+proměnnými, které se skládají z více proměnných slouží datový typ
+struktura. Definicí struktury &#8222;vznikne&#8220; nový datový typ
+jeho název je &#8222;<font face="Courier New, monospace">struct
+Jmeno</font>&#8220; (to znamená, že stejně jako jsme používali typ
+<font face="Courier New, monospace">int</font> nyní můžeme (na místo
+int) psát &#8222;<font face="Courier New, monospace">struct Jmeno</font>&#8220;).</p>
+<ol>
+	<li><p>Vytvořte projekt se soubory <font face="Courier New, monospace">main.c</font>
+	(zde naprogramujte funkci <font face="Courier New, monospace">main</font>),
+	<font face="Courier New, monospace">komplex.c</font> a <font face="Courier New, monospace">komplex.h</font>.
+	Soubor <font face="Courier New, monospace">komplex.h</font> ošetřete
+	proti vícenásobnému načtení (podmíněný překlad) a hlavičkový soubor
+	vložte do obou zdrojových souborů (*.c).</p>
+	</li><li><p>V souboru <font face="Courier New, monospace">komplex.h</font>
+	bude vše co při kompilaci nevytváří přímý kód (prototyp struktury,
+	funkcí, &#8230;) v souboru <font face="Courier New, monospace">komplex.c</font>
+	bude to co tvoří kód (funkce s tělem, definice proměnných).</p>
+	</li><li><p>Navrhněte a naprogramujte strukturu <font face="Courier New, monospace">TKomplex</font>,
+	která má dvě složky &#8211; <font face="Courier New, monospace">iRe,
+	iIm.</font> Pro složky zvolte vhodný datový typ. Popis struktury
+	umístěte do hlavičkového souboru <font face="Courier New, monospace">komplex.h</font>.
+	Ve funkci <font face="Courier New, monospace">main</font>
+	nadefinujte dvě proměnné typu <font face="Courier New, monospace">struct
+	TKomplex</font> s názvy <font face="Courier New, monospace">aa, bb,</font>
+	a dva ukazatele na typ <font face="Courier New, monospace">struct
+	TKomplex </font>s názvy <font face="Courier New, monospace">pa, pb</font>.</p>
+	</li><li><p>Proměnnou <font face="Courier New, monospace">aa</font>
+	inicializujte přímo v definici na hodnotu <font face="Courier New, monospace"><font size="2" style="font-size: 11pt"><span lang="en-US">{</span></font></font><font face="Courier New, monospace"><font size="2" style="font-size: 11pt">1.1,
+	2.2}</font></font>. Hodnoty proměnné <font face="Courier New, monospace">bb</font>
+	nastavte/inicializujte pomocí samostatných přiřazovacích příkazů
+	(přiřazení pomocí operátoru = pro jednotlivé složky struktury) na
+	hodnotu <font face="Courier New"><font size="2" style="font-size: 11pt">{3.3,
+	4.4}</font></font>. Ukazatel <font face="Courier New, monospace">pb</font>
+	nastavte tak, aby ukazoval na proměnnou <font face="Courier New, monospace">bb</font>.</p>
+	</li><li><p>Ve funkci <font face="Courier New, monospace">main</font>
+	vytiskněte proměnné <font face="Courier New, monospace">aa</font> a
+	<font face="Courier New, monospace">bb</font> ve formátu
+	&#8220;(<font face="Courier New"><font size="2" style="font-size: 11pt">1.1+2.2i)</font></font>&#8220;
+	(shodnotami pro proměnnou <font face="Courier New, monospace">aa)</font>.
+	Vytiskněte i druhou proměnnou <font face="Courier New, monospace">bb</font>,
+	ale tentokrát pomocí ukazatele <font face="Courier New, monospace">pb</font>
+	(z předchozího bodu), který na ni ukazuje.</p>
+	</li><li><p>a) Napište funkci <font face="Courier New, monospace">Print</font>
+	pro tisk (struktury) komplexního čísla ve formátu z minulého bodu.
+	Proměnnou předejte hodnotou jako jediný parametr funkce <font face="Courier New, monospace">Print</font>,
+	tj. <font face="Courier New, monospace">struct</font>
+	<font face="Courier New, monospace">TKomplex</font>.<br>Protože
+	funkce pro tisk nemění proměnnou (a ani by ji z podstaty chápání
+	tisku měnit neměla), je vhodné u typu parametru použít modifikátor
+	<font face="Courier New, monospace">const</font>, tedy : <font face="Courier New, monospace">const
+	struct TKomplex aVal.</font> Uvedení modifikátoru <font face="Courier New, monospace">const</font>
+	má význam pro programátora, neboť překladač provede kontrolu, zda se
+	parametr v těle skutečně nemodifikuje. V případě pokusu o změnu
+	proměnné zahlásí překladač při překladu chybu.<br>Funkci rozšiřte o
+	další parametr typu řetězec, který se vytiskne předtím, než se
+	vytiskne číslo (v tomto řetězci může být například komentář &#8220;<i>Soucet
+	cisel je:</i><font face="Times New Roman, serif"><font size="2" style="font-size: 11pt"><i>&#765;</i></font></font>&#8220;).
+	Nebude-li text požadován, použijte při volání hodnotu NULL, a ve
+	funkci tento stav ošetřete.<br>b) (DU) Napište druhou funkci pro
+	tisk <font face="Courier New, monospace">PrintP</font> tak, aby byl
+	parametrem ukazatel tj. <font face="Courier New, monospace">struct
+	TKomplex*</font>. Přidáme-li proměnnou pro počet prvků <font face="Courier New, monospace">aLen</font>,
+	můžeme tuto funkci použít nejen pro tisk jedné proměnné, ale i pro
+	tisk polí (prvky vytištěné podle příkladu 4 oddělené (napříkald)
+	mezerou). <br><font face="Courier New, monospace">int </font><font face="Courier New, monospace"><span lang="en-US">PrintP(const
+	struct</span></font> <font face="Courier New, monospace">TKomplex
+	*aData, unsigned aLen, char *aTxt)</font><br>Podobně jako u předání
+	hodnotou je možné označit modifikátorem <font face="Courier New, monospace">const</font>
+	i hodnoty předávané pomocí ukazatele: <br><font face="Courier New, monospace">const
+	struct TKomplex* const</font>. (blíže viz. bod 6)<br>c) Srovnejte
+	výhody a nevýhody předání strukutry pomocí hodnoty a pomocí
+	ukazatele.</p>
+	</li><li><p>Napište funkci <font face="Courier New, monospace">int
+	SwapParts(const struct TKomplex * const aIn, struct TKomplex * const
+	aOut).</font><br><font face="Times New Roman, serif"><font size="3">Struktura
+	představuje tzv. složený datový typ. Jeho velikost je tedy závislá
+	na počtu a velikosti všech složek. Při předávání hodnotou dochází ke
+	kopírování celé struktury do paměťové oblasti zásobníku, což
+	představuje časově a paměťově náročnou operaci. Abychom se těmto
+	operacím vyhnuli, je vhodné zvážit, zda nepředat do funkce jako
+	parametr pouze ukazatel na již existující strukturu. Parametr </font></font><font face="Courier New, monospace"><font size="3">aIn</font></font>
+	<font face="Times New Roman, serif"><font size="3">představuje neměnný
+	ukazatel na neměnnou hodnotu vstupního komplexního čísla a parametr
+	</font></font><font face="Courier New, monospace"><font size="3">aOut</font></font>
+	<font face="Times New Roman, serif"><font size="3">představuje neměnný
+	ukazatel na výstupní hodnotu typu </font></font><font face="Courier New, monospace"><font size="3">struct
+	TKomplex</font></font><font face="Times New Roman, serif"><font size="3">.
+	</font></font><br>Funkce uloží vstupní komplexní číslo do výstupního
+	tak, že jeho složky budou vyměněny <font face="Courier New, monospace"><font size="3">iIm&lt;=&gt;iRe</font></font>
+	(oproti původní proměnné). <br>Pozn.: Zkuste volání se stejnou
+	proměnnou pro oba parametry tj. <font face="Courier New, monospace">SwapParts(&amp;a,
+	&amp;a)</font> &#8211; v čem může být problém?</p>
+	</li><li><p>Využití ukazatelů v parametruch ovšem vyžaduje kontrolu
+	hodnot ukazatelů na <font face="Courier New, monospace"><font size="3">NULL</font></font>.
+	Doplňte tyto kontroly do těla funkce a zajistěte navrácení chybové
+	hodnoty.</p>
+	</li><li><p>Napište funkci <font face="Courier New, monospace">struct
+	TKomplex Add(const struct TKomplex aVal1, const struct TKomplex
+	aVal2)</font>, která sečte dvě komplexní proměnné a výsledek vrátí
+	jako návratovou hodnotu. Jelikož je výsledkem proměnná jejíž prvky
+	jsou různé od existujících proměnných, musí pro ni vzniknout nová
+	proměnná. 
+	</p>
+	<p>Ve funkci <font face="Courier New, monospace"><font size="3">main</font></font>
+	nadefinujte pole komplexních čísel <font face="Courier New, monospace"><font size="3">struct
+	TKomplex</font></font> (délka pole bude zadána pomocí makra <font face="Courier New, monospace"><font size="3">#define
+	N 10</font></font>. Prvky pole naplňte v cyklu hodnotami <font face="Courier New, monospace"><font size="3">iRe
+	= (i-5)*(i-5); Imag = i;</font></font>, kde i se mění od 0 do N.
+	Napište funkci <font face="Courier New, monospace"><font size="3">Sort</font></font>,
+	která seřadí pole komplexních čísel <font face="Courier New, monospace"><font size="3">aValues</font></font>
+	o délce <font face="Courier New, monospace"><font size="3">aLen</font></font>
+	na základě jejich velikosti (velikost komplexního čísla je
+	definovaná jako odmocnina ze součtu kvadrátů složek). <br><font face="Courier New, monospace"><font size="3">int
+	Sort(struct TKomplex aValues[], const unsigned aLen)</font></font>.<br>Pozn.
+	K řazení je možné využít knihovní funkce <font face="Courier New, monospace"><font size="3">qsort</font></font>
+	(vyžaduje hlavičkový soubor <font face="Courier New, monospace"><font size="3">stdlib.h</font></font>).<br>Ošetřete
+	chyby vzniklé zadáním špatných hodnot u obou parametrů funkce
+	<font face="Courier New, monospace"><font size="3">Sort</font></font>.<br>Původní
+	a seřazené pole vytiskněte pomocí funkce <font face="Courier New, monospace"><font size="3">Print</font></font>
+	(<font face="Courier New, monospace"><font size="3">PrintP</font></font>).<br><br>DU:
+	Promyslete situaci, kdy by pro výsledné setříděné pole měla být
+	použita nová proměnná. Bylo by tedy nutné pro výsledné pole
+	naalokovat místo a předat ho zpět do volající funkce. Zhodnoťte
+	vhodnost následujících hlaviček funkce k tomuto účelu? Promyslete i
+	volání těchto funkcí včetně definice proměnných (a nutnost
+	odalokovat naalokovanou paměť).<br><font face="Courier New, monospace">struct
+	TKomplex* Sort(const struct TKomplex *aData, int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">);<br>struct
+	TKomplex* Sort(const struct TKomplex aData[], int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">);<br>struct
+	TKomplex Sort(const struct TKomplex *aData, int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">);<br>struct
+	TKomplex Sort(const struct TKomplex aData[], int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">);<br>int
+	Sort(const struct TKomplex *aData, int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">,
+	struct TKomplex *aOut);<br>int Sort(const struct TKomplex aData[],
+	int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">,
+	struct TKomplex aOut[]);<br>int Sort(const struct TKomplex aData[],
+	int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">,
+	struct TKomplex *aOut);<br>int Sort(const struct TKomplex aData[],
+	int </font><font face="Courier New, monospace"><span lang="en-US">aLen</span></font><font face="Courier New, monospace">,
+	struct TKomplex **aOut);<br></font><br><br>
+	</p>
+	</li><li><p> (DU) Pro funkci Add je možné volit různá řešení parametrů.
+	Promyslete jednotlivé následující typy volání, z nichž pomocí všech
+	je možné požadovanou funkci splnit. Srovnejte jednotlivá řešení z
+	ohledem na velikost použité paměti při předávání parametrů a způsobu
+	naprogramování. Nezapomeňte uvažovat i volání funkcí včetně definice
+	použitých proměnných. Diskutujte ne/výhodnost řešení používajících
+	dynamickou alokaci paměti.<br>(Těla funkcí jsou pouze náznakem).</p>
+</li></ol>
+<p><br><br>
+</p>
+<p>struct TKomplex Add(struct TKomplex s1,struct TKomplex
+s2)<br>{<br>struct TKomplex pom;<br><br> return pom;<br>}</p>
+<p><br><br>
+</p>
+<p>struct TKomplex Add(struct TKomplex *s1,struct TKomplex
+*s2)<br>{<br>struct TKomplex pom;<br><br> return pom;<br>}</p>
+<p><br><br>
+</p>
+<p>struct TKomplex* Add(struct TKomplex s1,struct TKomplex
+s2)<br>{<br>struct TKomplex *pom = malloc();<br><br> return pom;<br>}</p>
+<p><br><br>
+</p>
+<p>struct TKomplex* Add(struct TKomplex *s1,struct TKomplex *s2)<br>{<br>
+struct TKomplex *pom = malloc();<br><br> return pom;<br>}</p>
+<p><br><br>
+</p>
+<p>int Add(struct TKomplex *s1,struct TKomplex *s2,struct TKomplex
+*s3)<br>{<br><br> return 0;<br>}</p>
+<p><br><br>
+</p>
+<p>int Ukazatele3(struct TKomplex *s1,struct TKomplex *s2,struct
+TKomplex **s3)<br>{<br> *s3 = malloc();<br><br> return 0;<br>}</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Poslední změna 2015-04-30</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+
+</body></html>
