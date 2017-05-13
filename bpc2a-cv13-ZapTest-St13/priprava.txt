@@ -1,0 +1,9 @@
+Nalogujte se do PC. (v pøípadì, e nelze zkontrolujte síovı kabel - musí bıt zastrèen do levé zdíøky v zadní stìnì stolu).
+Spuste VS C++.
+Zkopírujte si zdroje, které potøebujete (sí, flash disk ...)
+Zkopírujte si na plochu adresáø R:\vyuka\UAMT\richter\bpc2\2017\t3X. V tomto adresáøi je zaloenı projekt vèetnì souborù pro psaní programu, testovacích souborù check a vzorového vstupního souboru (nemìnit). Dále je nastaven parametr pøíkazové øádky na testovací soubor.
+Vytáhnìte flash disky a odpojte se od síe - opatrnì vytáhnìte síovı kabel (ze "zdi" - ne z PC) - v pøípadì nesplnìní tohoto bodu je hodnocení testu 0 (nula).
+Spuste projekt v adresáøi zkopírovaném na plochu a pracujte v nìm.
+Dále pokraèujte podle zadání. Zadání podepište a na konci hodiny ho odevzdáte pøi hodnocení vısledkù.
+Hodnotí se pouze spustitelné øešení.
+Pøedpøipravenı testovací soubor nemìòte.
